@@ -1,0 +1,173 @@
+.hero1-container {
+  text-align: center;
+  padding: 60px 20px 40px;
+  max-width: 1400px;
+  margin: 30px auto;
+  margin-bottom: 50px;
+}
+
+/* MAIN TITLE */
+.hero1-title {
+  font-size: 52px;
+  font-weight: 800;
+  color: #000;
+  line-height: 1.2;
+}
+
+.hero1-title span {
+  color: #4da3ff;
+}
+
+/* SUB TEXT */
+.hero1-subtext {
+  max-width: 900px;
+  margin: 15px auto 25px;
+  font-size: 18px;
+  color: #111;
+  line-height: 1.6;
+}
+
+/* IMAGE BOX — FOR BUTTON OVERLAY */
+.hero1-image-box {
+  width: 100%;
+  position: relative;   /* REQUIRED */
+  margin-top: -130px;
+}
+
+.hero1-image {
+  width: 100%;
+  max-width: 1400px;
+  display: block;
+  margin: auto;
+} 
+
+.hero1-video-box {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* VIDEO STYLING */
+.hero1-video {
+  width: 100%;
+  max-width: 1400px;
+  display: block;
+  margin: auto;
+}
+
+/* READ MORE BUTTON OVER IMAGE */
+.hero-button {
+  position: absolute;
+  bottom: 80px;               /* Push button above bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+
+  background: white;
+  border: 2px solid #3a3f4c;
+  padding: 14px 36px;
+  border-radius: 40px;
+
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.graph-button:hover {
+  background: #f6f7f9;
+}
+
+/* Remove link underline */
+.graph-button a {
+  text-decoration: none;
+  color: #000;
+}
+
+/* ===============================
+   RESPONSIVE BREAKPOINTS ONLY
+   (NO STYLE CHANGES)
+=============================== */
+
+/* LARGE TABLETS / SMALL LAPTOPS */
+@media (max-width: 992px) {
+  .hero1-title {
+    font-size: 42px;
+  }
+
+  .hero1-subtext {
+    font-size: 17px;
+    padding: 0 10px;
+  }
+
+  .hero-button {
+    bottom: 50px;
+    font-size: 18px;
+    padding: 12px 30px;
+  }
+}
+
+/* TABLETS */
+@media (max-width: 768px) {
+  .hero1-container {
+    padding: 60px 15px;
+    margin-top: 30px;
+    margin-bottom: 10px !important; 
+  }
+
+  .hero1-title {
+    font-size: 34px;
+  }
+
+  .hero1-subtext {
+    font-size: 16px;
+  }
+
+  .hero-button {
+    bottom: 35px;
+    font-size: 12px;
+    padding: 10px 18px;
+  }
+   .hero1-video {
+    height: 300px;            /* Increase height */
+    object-fit: cover;        /* Crop edges nicely */
+  }
+  
+}
+
+/* MOBILE */
+@media (max-width: 480px) {
+  .hero1-title {
+    font-size: 26px;
+    line-height: 1.3;
+  }
+
+  .hero1-subtext {
+    font-size: 15px;
+    line-height: 1.5;
+    padding: 0 5px;
+  }
+
+  .hero-button {
+    bottom: 20px;
+    font-size: 16px;
+    padding: 9px 22px;
+  }
+}
+
+/* VERY SMALL MOBILE */
+@media (max-width: 360px) {
+  .hero1-title {
+    font-size: 22px;
+  }
+
+  .hero1-subtext {
+    font-size: 14px;
+  }
+
+  .hero-button {
+    bottom: 16px;
+    font-size: 15px;
+    padding: 8px 20px;
+  }
+}

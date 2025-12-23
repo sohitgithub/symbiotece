@@ -1,0 +1,118 @@
+/* Section Wrapper */
+.values-wrapper {
+  width: 100%;
+  padding: 120px 0;
+  background: #fff;
+  text-align: center;
+  font-family: "Inter", sans-serif;
+}
+
+/* Title */
+.values-title {
+  font-size: 42px;
+  font-weight: 700;
+  color: #3a3a3a;
+  margin-bottom: 10px;
+}
+
+/* Subtitle */
+.values-subtitle {
+  font-size: 18px;
+  color: #7d7d7d;
+  margin-bottom: 60px;
+}
+
+/* Grid */
+.values-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 35px 35px;
+  padding: 0 40px;
+}
+
+/* Card */
+.value-card {
+  background: #ffffff;
+  border-radius: 22px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 40px 30px;
+  text-align: center;
+  cursor: default;
+  transition: 0.3s ease;
+  box-shadow: 0px 0px 0px rgba(0,0,0,0);
+}
+
+.value-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: #0bbf9a;
+  box-shadow: 0px 18px 40px rgba(0, 0, 0, 0.07);
+}
+
+/* Icon */
+.value-icon {
+  font-size: 125px;              /* Bigger icon */
+  color: #3d3d3d;
+  margin-bottom: 25px;
+
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 160px;                 /* Gives icon proper space */
+  pointer-events: none;
+}
+
+.value-card:hover .value-icon {
+  transform: translateY(-10px) scale(1.15);
+  filter: drop-shadow(0px 12px 20px rgba(80, 169, 177, 0.967));
+}
+
+.value-card:hover .value-icon {
+  animation: bounceIn 0.6s ease forwards;
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.7); }
+  60% { transform: scale(1.25); }
+  80% { transform: scale(1.1); }
+  100% { transform: scale(1.15); }
+}
+
+/* Title */
+.value-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #343541;
+  margin-bottom: 10px;
+}
+
+/* Description */
+.value-desc {
+  font-size: 16px;
+  color: #7c7c7c;
+  max-width: 320px;
+  margin: auto;
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+  .values-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+}
+
+@media (max-width: 700px) {
+  .values-grid {
+    grid-template-columns: repeat(1, 1fr);
+    padding: 0 20px;
+  }
+
+  .value-card {
+    padding: 35px 20px;
+  }
+}

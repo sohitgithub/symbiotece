@@ -1,0 +1,122 @@
+/* =====================================
+   PAGE WRAPPER
+===================================== */
+.governance-page {
+  width: 100%;
+  padding: 100px 120px 40px;
+  margin-top: 70px;
+  font-family: "Inter", sans-serif;
+  background: #fff;
+}
+
+/* =====================================
+   TABS
+===================================== */
+.governance-tabs {
+  display: flex;
+  gap: 26px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 12px;
+  margin-bottom: 35px;
+}
+
+.gov-tab {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  font-weight: 500;
+  color: #555;
+  cursor: pointer;
+  padding-bottom: 10px;
+  transition: color 0.25s ease;
+  white-space: nowrap;
+}
+
+.gov-tab.active {
+  color: #4da3ff;
+  border-bottom: 3px solid #4da3ff;
+  font-weight: 600;
+}
+
+/* =====================================
+   CONTENT
+===================================== */
+.governance-content {
+  margin-top: 10px;
+}
+
+/* =====================================
+   BOARD GRID
+===================================== */
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+.board-card {
+  text-align: left;
+}
+
+.board-img {
+  width: 100%;
+  height: 330px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #f3f4f6;
+}
+
+.board-name {
+  margin-top: 12px;
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.board-role {
+  font-size: 14px;
+  margin-top: 4px;
+  color: #777;
+}
+
+/* =====================================
+   RESPONSIVE FIXES
+===================================== */
+
+/* Tablets */
+@media (max-width: 1100px) {
+  .board-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Small Tablets */
+@media (max-width: 900px) {
+  .governance-page {
+    padding: 80px 40px 40px;
+  }
+
+  .board-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .governance-page {
+    padding: 60px 20px 30px;
+  }
+
+  .gov-tab {
+    font-size: 16px;
+  }
+
+  .governance-tabs {
+    gap: 14px;
+  }
+
+  .board-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}

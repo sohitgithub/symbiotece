@@ -1,0 +1,71 @@
+/* OUTER WRAPPER */
+.fund-wrapper {
+  width: 100%;
+  padding-top: 40px;
+  padding-left: 120px;     /* matches screenshot offset */
+  font-family: "Inter", sans-serif;
+}
+
+/* TITLE */
+.fund-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #1c1c1c;
+  margin-bottom: 34px;
+}
+
+/* GRID 2-COLUMN LAYOUT */
+.fund-grid {
+  display: flex;
+  align-items: flex-start;
+  gap: 70px;          /*_spacing fixed to match screenshot_*/
+  width: 800px;       /*_keeps layout compact like screenshot_*/
+}
+
+/* COLUMN */
+.fund-col {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;          /* exact row spacing */
+}
+
+/* ROW (label + value) */
+.fund-item {
+  display: flex;
+  justify-content: space-between;
+  width: 320px;        /* exact Groww width */
+}
+
+.fund-label {
+  font-size: 15.5px;
+  color: #4b5563;
+}
+
+.fund-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* VERTICAL DIVIDER */
+.fund-divider {
+  width: 1px;
+  height: 185px;      /* EXACT divider height from screenshot */
+  background: #e5e7eb;
+  margin-top: 5px;
+}
+
+/* BOTTOM INFO ROW */
+.fund-info {
+  margin-top: 8px;
+  font-size: 16px;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.info-icon {
+  opacity: 0.7;
+  font-size: 15px;
+}

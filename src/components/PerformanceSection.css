@@ -1,0 +1,286 @@
+/* SECTION WRAPPER */
+.performance-wrapper {
+  width: 100%;
+  padding: 120px 0;
+  background: #fff;
+  font-family: "Inter", sans-serif;
+  margin-top: -70px;
+}
+
+.performance-title {
+  text-align: center;
+  font-size: 42px;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 60px;
+}
+
+/* GRID */
+.performance-grid {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+/* CARD */
+.performance-card {
+  background: #ffffff;
+  border-radius: 22px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 32px 30px 30px;
+  transition: 0.3s ease;
+  cursor: default;
+}
+
+.performance-card:hover {
+  transform: translateY(-8px);
+  border-color: #4da3ff;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* HEADER */
+.performance-header h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #3b3f4a;
+  margin-bottom: 4px;
+}
+
+.performance-subtitle {
+  font-size: 14px;
+  color: #a3a4ad;
+}
+
+/* CHART AREA */
+.performance-chart {
+  margin-top: 30px;
+}
+
+/* BARS ROW */
+.bars-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  height: 220px;
+  margin-bottom: 16px;
+}
+
+/* Each column (bar + labels) */
+.bar-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Bar container */
+.bar-wrapper {
+  width: 28px;
+  height: 160px;
+  background: linear-gradient(
+    to top,
+    rgb(77, 163, 255),
+    rgba(80, 220, 255, 0.9)
+  );
+  border-radius: 999px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+/* Bar fill */
+.bar-fill {
+  width: 100%;
+  background: #d3d5df;
+  border-radius: 999px 999px 0 0;
+  transition: 0.4s ease;
+}
+
+/* Latest period (green) */
+.bar-current {
+  background: #4da3ff;
+}
+
+/* Labels */
+.bar-number {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #7e7f88;
+}
+
+.bar-label {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #a1a2aa;
+}
+
+/* Bottom values */
+.performance-bottom {
+  margin-top: 18px;
+}
+
+.bottom-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #b2b3bc;
+}
+
+.bottom-values {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.bottom-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bottom-fy {
+  font-size: 11px;
+  color: #a5a6af;
+}
+
+.bottom-val {
+  font-size: 11px;
+  color: #676979;
+  margin-top: 2px;
+}
+
+/* FOOTNOTE */
+.performance-footnote {
+  margin-top: 18px;
+  font-size: 11px;
+  color: #c0c1ca;
+  line-height: 1.5;
+}
+/* -------------------------------------------- */
+/*               RESPONSIVE CSS                 */
+/* -------------------------------------------- */
+
+/* TABLETS — 3 → 1 COLUMN */
+@media (max-width: 1100px) {
+  .performance-grid {
+    grid-template-columns: 1fr;
+    max-width: 750px;
+    gap: 28px;
+  }
+
+  .performance-title {
+    font-size: 36px;
+  }
+
+  .performance-wrapper {
+    margin-top: -40px; /* reduced gap */
+  }
+}
+
+/* TABLETS — Reduce padding + bar size */
+@media (max-width: 900px) {
+  .performance-wrapper {
+    padding: 80px 0;
+    margin-top: -20px; /* further reduce gap */
+  }
+
+  .performance-card {
+    padding: 28px 24px 26px;
+  }
+
+  .bars-row {
+    gap: 14px;
+    height: 200px;
+  }
+
+  .bar-wrapper {
+    width: 24px;
+    height: 145px;
+  }
+}
+
+/* LARGE MOBILE */
+@media (max-width: 700px) {
+  .performance-grid {
+    padding: 0 20px;
+  }
+
+  .bars-row {
+    gap: 10px;
+  }
+
+  .bar-wrapper {
+    width: 22px;
+    height: 130px;
+  }
+
+  .bar-number,
+  .bar-label {
+    font-size: 11px;
+  }
+
+  .performance-title {
+    font-size: 28px;
+  }
+
+  .performance-wrapper {
+    margin-top: 0; /* remove negative margin completely */
+  }
+}
+
+/* NORMAL MOBILE */
+@media (max-width: 500px) {
+  .performance-wrapper {
+    padding: 10px 0px 60px 0px;
+    margin-top: 0; /* add small spacing so sections touch nicely */
+  }
+
+  .performance-card {
+    padding: 22px 18px;
+  }
+
+  .bars-row {
+    height: 160px;
+  }
+
+  .bar-wrapper {
+    width: 18px;
+    height: 100px;
+  }
+
+  .performance-title {
+    font-size: 26px;
+    margin-bottom: 15px;
+  }
+
+}
+
+/* SMALL MOBILE */
+@media (max-width: 400px) {
+  .performance-title {
+    font-size: 22px;
+  }
+
+  .bar-wrapper {
+    width: 16px;
+    height: 90px;
+  }
+
+  .bars-row {
+    gap: 6px;
+  }
+
+  .bar-number,
+  .bar-label,
+  .bottom-fy,
+  .bottom-val {
+    font-size: 10px;
+  }
+
+  .performance-wrapper {
+    margin-top: 15px; /* perfect spacing for small devices */
+  }
+}

@@ -1,0 +1,74 @@
+/* SECTION BACKGROUND (half white, half grey) */
+.cert-section {
+  padding: 60px 20px 80px;
+  text-align: center;
+  background: linear-gradient(to bottom, #ffffff 60%,#d3d3d3 20%);
+  margin-top: -70px;
+}
+
+/* Title */
+.cert-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 28px;
+  color: #333;
+}
+
+/* Center Row */
+.cert-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 900px;
+  margin: auto;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.07);
+}
+
+/* Box Styling */
+.cert-box {
+  background: linear-gradient(90deg, #349cc5, #5cb5d9);
+  padding: 22px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: 0.3s ease;
+  border-right: 1px solid rgba(255,255,255,0.25);
+}
+
+.cert-box:last-child {
+  border-right: none;
+}
+
+.cert-box:hover {
+  background: linear-gradient(90deg, #2c8cad, #4fa9c9);
+  transform: translateY(-3px);
+}
+
+/* Icons */
+.cert-icon {
+  width: 65px;
+  height: auto;
+  margin-bottom: 10px;
+  filter: brightness(0) invert(1); /* White icons */
+}
+
+/* Text Label */
+.cert-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .cert-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .cert-row {
+    grid-template-columns: 1fr;
+  }
+}

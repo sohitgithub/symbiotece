@@ -1,0 +1,408 @@
+/* ========================================= */
+/*               PAGE WRAPPER                */
+/* ========================================= */
+
+.performance-page {
+  padding: 100px 120px 40px;
+  margin-top: 70px;
+  background: #fff;
+  color: #1a1a1a;
+  width: 100%;
+}
+
+/* ========================================= */
+/*                  TABS                     */
+/* ========================================= */
+
+.tabs-container {
+  margin-bottom: 34px;
+}
+
+.main-tabs button,
+.annual-tabs button {
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  margin-right: 30px;
+  cursor: pointer;
+  padding-bottom: 8px;
+  font-weight: 500;
+  color: #707070;
+}
+
+.main-tabs .active,
+.annual-tabs .active {
+  border-bottom: 3px solid #4da3ff;
+  color: black;
+}
+
+.annual-tabs {
+  margin-top: 18px;
+}
+/* Annual Sub Tabs - Groww Pills (One-Line Unbreakable) */
+/* Annual Sub Tabs — Fit in One Line, No Scroll, No Wrap */
+.annual-tabs {
+  display: flex;
+  justify-content: space-between;   /* spread evenly */
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: nowrap;                 /* no wrapping */
+}
+
+.annual-tabs button {
+  flex: 1;                           /* equal width pills */
+  text-align: center;
+  padding: 8px 10px;                 /* reduced padding to fit */
+  font-size: 14px;
+  border-radius: 30px;
+  border: 1px solid #e5e5e5;
+  background: #fafafa;
+  color: #505060;
+  cursor: pointer;
+  white-space: nowrap;               /* keep text in one line */
+  transition: 0.25s ease;
+}
+
+/* Active pill */
+.annual-tabs .active {
+  background: #ffffff;
+  border: 2px solid #c7c7c7;
+  color: #1e1e1e;
+  font-weight: 600;
+}
+
+/* Hover */
+.annual-tabs button:hover {
+  background: white;
+  border-color: #d6d6d6;
+}
+
+
+/* ========================================= */
+/*              QUARTERLY TABLE             */
+/* ========================================= */
+
+.quarterly-container {
+  margin-top: 30px;
+}
+
+.year-dropdown {
+  border: 1px solid #ddd;
+  padding: 10px 18px;
+  width: 140px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+/* ---- THE MOST IMPORTANT ALIGNMENT PART ---- */
+.quarterly-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* forces perfect alignment like Groww */
+}
+
+/* Table Head + Body Cells */
+.quarterly-table th,
+.quarterly-table td {
+  padding: 14px 8px;
+  border-bottom: 1px solid #eee;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+/* LEFT COLUMN WIDTH (Document Type) */
+.quarterly-table th:nth-child(1),
+.quarterly-table td:nth-child(1) {
+  width: 48%;             /* Groww style */
+  white-space: normal;    /* allow wrapping */
+  line-height: 1.35;
+  text-align: left !important;
+}
+
+/* Q1 – Q4 COLUMN WIDTHS */
+.quarterly-table th:nth-child(2),
+.quarterly-table td:nth-child(2),
+.quarterly-table th:nth-child(3),
+.quarterly-table td:nth-child(3),
+.quarterly-table th:nth-child(4),
+.quarterly-table td:nth-child(4),
+.quarterly-table th:nth-child(5),
+.quarterly-table td:nth-child(5) {
+  width: 13%;             /* perfect equal quarters */
+  text-align: center;
+}
+
+/* Quarter highlight pill */
+.pill {
+  display: inline-block;
+  background: #4da3ff;   /* Groww Blue */
+  color: white;
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+/* ========================================= */
+/*            ANNUAL COMPANY CARDS          */
+/* ========================================= */
+.annual-wrapper {
+  width: 100%;
+  margin-top: 30px;
+}
+
+.annual-year-title {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.annual-year-block {
+  margin-bottom: 50px;
+}
+
+.annual-cards {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.annual-card {
+  width: 150px;
+  height: 180px;
+  padding: 20px;
+  border: 1px solid #d9d9d9;
+  border-radius: 12px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  transition: 0.2s ease-in-out;
+}
+
+.annual-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Center icon */
+.annual-card-top {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.annual-icon {
+  width: 45px;
+  opacity: 0.9;
+}
+
+/* Text below icon */
+.annual-card-title {
+  margin-top: 14px;
+  font-size: 16px;
+  text-decoration: underline;
+  color: #333;
+  text-align: center;
+}
+
+.annual-divider {
+  margin-top: 40px;
+  border: none;
+  border-bottom: 1px solid #eee;
+}
+
+
+/* ========================================= */
+/*               SUBSIDIARIES                */
+/* ========================================= */
+
+/* SUBSIDIARIES WRAPPER */
+.subsidiaries-container {
+  width: 100%;
+  margin-top: 30px;
+}
+
+/* ---------- HEADER (Years row) ---------- */
+.subsidiary-header {
+  display: grid;
+  grid-template-columns: 40% 20% 20% 20%;
+  padding: 15px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.company-header {
+  /* keeps left empty space aligned with company column */
+}
+
+.year-header {
+  text-align: center;
+  font-weight: 600;
+  color: #333;
+}
+
+/* ---------- ROWS ---------- */
+.subsidiary-row {
+  display: grid;
+  grid-template-columns: 40% 20% 20% 20%;
+  padding: 22px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.subsidiary-name {
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.subsidiary-report {
+  text-align: center;
+  color: #4da3ff;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.subsidiary-report:hover {
+  text-decoration: underline;
+}
+
+
+/* ========================================= */
+/*               GROUP COMPANY               */
+/* ========================================= */
+
+.group-title {
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.group-cards {
+  display: flex;
+  gap: 30px;
+}
+
+.group-card {
+  width: 160px;
+  padding: 30px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.group-year {
+  font-weight: 700;
+}
+
+.group-icon{
+  font-size: 48px;
+  font-weight: bold;
+}
+
+
+/* ========================================= */
+/*              RESPONSIVENESS               */
+/* ========================================= */
+
+@media (max-width: 1200px) {
+  .performance-page {
+    padding: 80px 60px 40px;
+  }
+}
+
+@media (max-width: 900px) {
+  .performance-page {
+    padding: 60px 40px 40px;
+  }
+}
+
+@media (max-width: 700px) {
+  .performance-page {
+    padding: 40px 20px 30px;
+  }
+}
+
+/* TABS */
+@media (max-width: 700px) {
+  .main-tabs button,
+  .annual-tabs button {
+    font-size: 16px;
+    margin-right: 20px;
+    padding-bottom: 6px;
+  }
+
+  .annual-tabs {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 500px) {
+  .main-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .main-tabs button {
+    margin-right: 0;
+  }
+}
+
+/* ---- MOBILE COLUMN ALIGNMENT ---- */
+@media (max-width: 600px) {
+
+  /* Document column shrinks slightly */
+  .quarterly-table th:nth-child(1),
+  .quarterly-table td:nth-child(1) {
+    width: 45%;
+  }
+
+  /* Q columns stay equal */
+  .quarterly-table th:nth-child(n+2),
+  .quarterly-table td:nth-child(n+2) {
+    width: 13%;
+  }
+
+  .quarterly-table th,
+  .quarterly-table td {
+    font-size: 13px;
+    padding: 10px 4px !important;
+  }
+
+  .pill {
+    padding: 4px 10px !important;
+    font-size: 12px !important;
+  }
+
+  .year-dropdown {
+    width: 110px;
+    padding: 8px 14px;
+    font-size: 14px;
+  }
+}
+
+/* ========================================= */
+/*              SUBSIDIARIES                */
+/* ========================================= */
+
+@media (max-width: 800px) {
+  .subsidiary-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .subsidiary-report {
+    margin-left: 0;
+    margin-right: 12px;
+  }
+}
+
+@media (max-width: 500px) {
+  .subsidiary-report {
+    display: inline-block;
+    margin-bottom: 6px;
+  }
+}

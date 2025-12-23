@@ -1,0 +1,113 @@
+/* =========================================
+   SCOPED CONTAINER
+   (Styles only apply inside this wrapper)
+========================================= */
+.board-section-wrapper {
+  width: 100%;
+  padding: 20px 0;
+}
+
+/* Grid Layout */
+.board-section-wrapper .board-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 Columns */
+  gap: 28px;
+  padding: 20px 0;
+}
+
+/* Card Link Reset */
+.board-section-wrapper .board-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+/* Hover Animation Wrapper */
+.board-section-wrapper .board-card-inner {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 15px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid transparent;
+}
+
+.board-section-wrapper .board-card-inner:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  border-color: #e5e7eb;
+}
+
+/* ============================
+   IMAGE STYLING (Perfected)
+============================ */
+.board-section-wrapper .board-img-container {
+  width: 100%;
+  aspect-ratio: 1 / 1.1; /* Ensures all photos are same rectangular shape */
+  overflow: hidden;
+  border-radius: 10px;
+  background: #f5f5f5;
+  margin-bottom: 15px;
+}
+
+.board-section-wrapper .board-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* CHANGED from contain: prevents gray bars, crops smartly */
+  object-position: top center; /* Focuses on faces */
+  transition: transform 0.5s ease;
+}
+
+.board-section-wrapper .board-card-inner:hover .board-img {
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+
+/* ============================
+   TEXT STYLING
+============================ */
+.board-section-wrapper .board-name {
+  margin: 0 0 6px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1.3;
+}
+
+.board-section-wrapper .board-role {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* Hover Text Color */
+.board-section-wrapper .board-card-inner:hover .board-name {
+  color: #4da3ff;
+}
+
+/* ============================
+   RESPONSIVE (Mobile/Tablet)
+============================ */
+@media (max-width: 1100px) {
+  .board-section-wrapper .board-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .board-section-wrapper .board-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .board-section-wrapper .board-name {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .board-section-wrapper .board-grid {
+    grid-template-columns: 1fr; /* Single column on very small phones */
+    max-width: 350px;
+    margin: 0 auto;
+  }
+}

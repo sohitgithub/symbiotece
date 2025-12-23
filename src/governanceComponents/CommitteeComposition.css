@@ -1,0 +1,94 @@
+/* ===============================
+   WRAPPER
+=============================== */
+.committee-wrapper {
+  padding: 40px 0;
+  font-family: "Inter", sans-serif;
+  width: 100%;
+}
+
+/* ===============================
+   SECTION BLOCK
+=============================== */
+.committee-section {
+  margin-bottom: 50px;
+}
+
+/* Section Title */
+.committee-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #2d3348;
+  margin-bottom: 22px;
+}
+
+/* ===============================
+   MEMBERS LAYOUT
+=============================== */
+.committee-members {
+  display: flex;
+  gap: 60px;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 25px;
+}
+
+/* Member Name */
+.member-name {
+  font-size: 17px;
+  font-weight: 500;
+  color: #222;
+}
+
+/* Member Role */
+.member-role {
+  font-size: 14px;
+  color: #6a6f7a;
+  margin-top: 3px;
+}
+
+/* Divider Line */
+.divider {
+  border: none;
+  height: 1px;
+  background: #e6e6e6;
+  margin-top: 16px;
+}
+
+/* ===============================
+   RESPONSIVE — TABLET
+=============================== */
+@media (max-width: 900px) {
+  .committee-members {
+    gap: 24px;
+  }
+}
+
+/* ===============================
+   RESPONSIVE — MOBILE
+=============================== */
+@media (max-width: 600px) {
+  .committee-title {
+    font-size: 20px;
+    margin-bottom: 18px;
+  }
+
+  .committee-members {
+    display: flex;
+    flex-direction: column;   /* stack neatly */
+    gap: 14px;
+    padding-left: 0;
+  }
+
+  .member-name {
+    font-size: 16px;
+  }
+
+  .member-role {
+    font-size: 13px;
+  }
+
+  .divider {
+    margin-top: 10px;
+  }
+}

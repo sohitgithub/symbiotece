@@ -1,0 +1,71 @@
+/* ============================
+   WRAPPER
+============================ */
+.share-wrapper {
+  padding: 40px 0;
+  font-family: "Inter", sans-serif;
+
+  display: flex;
+  justify-content: flex-start;  /* align left like Groww */
+  width: 100%;
+}
+
+/* ============================
+   CARD
+============================ */
+.share-card {
+  width: 100%;
+  max-width: 310px;
+  min-height: 150px;
+  background: #fff;
+
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+
+  padding: 26px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 16px;
+
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.share-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+/* ============================
+   ICON
+============================ */
+.share-icon {
+  font-size: 26px;
+  color: #565c63;
+}
+
+/* ============================
+   TEXT
+============================ */
+.share-text {
+  font-size: 15px;
+  color: #333;
+  line-height: 1.45;
+  font-weight: 500;
+}
+
+/* ============================
+   MOBILE RESPONSIVE
+============================ */
+@media (max-width: 600px) {
+  .share-wrapper {
+    justify-content: center;  /* center on mobile */
+  }
+
+  .share-card {
+    max-width: 100%;
+    min-height: auto;
+    padding: 22px 18px;
+  }
+}

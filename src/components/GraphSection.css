@@ -1,0 +1,111 @@
+/* WRAPPER */
+.graph-wrapper {
+  position: relative;
+  width: 100%;
+  padding: 140px 0 40px;
+  text-align: center;
+  overflow: hidden;
+  margin-top: -130px;
+}
+
+/* BUTTON */
+.graph-button {
+  margin-top: 40px;
+  font-weight: 600;
+  font-size: 20px;
+  padding: 14px 36px;
+  border-radius: 40px;
+  border: 2px solid #3a3f4c;
+  background: white;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.graph-button:hover {
+  background: #f6f7f9;
+}
+
+/* IMAGE */
+.graph-image {
+  width: 100%;               /* more friendly for all screens */
+  max-width: 1250px;
+  display: block;
+  margin: 35px auto 0;
+  opacity: 0.95;
+  pointer-events: none;
+  user-select: none;
+  margin-top: -130px;
+}
+/* ----------------------------------- */
+/*             RESPONSIVE              */
+/* ----------------------------------- */
+
+/* Laptops & Tablets */
+@media (max-width: 1024px) {
+
+  .graph-wrapper {
+    padding: 110px 0 40px;
+    margin-top: -90px;   /* was -130px → reduced */
+  }
+
+  .graph-image {
+    width: 85%;
+    margin-top: -90px;   /* match wrapper */
+  }
+}
+
+/* Tablets & Large Mobiles */
+@media (max-width: 768px) {
+
+  .graph-wrapper {
+    padding: 90px 0 30px;
+    margin-top: -50px;   /* reduced */
+  }
+
+  .graph-button {
+    font-size: 18px;
+    padding: 12px 28px;
+  }
+
+  .graph-image {
+    width: 90%;
+    margin-top: -50px;
+  }
+}
+
+/* Small Mobiles */
+@media (max-width: 480px) {
+
+  .graph-wrapper {
+    padding: 70px 0 25px;
+    margin-top: -130px;   /* very small pull */
+  }
+
+  .graph-button {
+    font-size: 16px;
+    padding: 10px 22px;
+  }
+
+  .graph-image {
+    width: 100%;
+    margin-top: -40px;   /* remove negative margin completely */
+  }
+}
+
+/* Extra Small Screens */
+@media (max-width: 360px) {
+
+  .graph-wrapper {
+    margin-top: -10px;   /* almost no negative margin */
+  }
+
+  .graph-button {
+    font-size: 15px;
+    padding: 8px 20px;
+  }
+
+  .graph-image {
+    width: 100%;
+    margin-top: 15px;
+  }
+}

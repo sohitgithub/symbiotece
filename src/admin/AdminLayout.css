@@ -1,0 +1,163 @@
+/* ROOT LAYOUT */
+
+.admin-layout {
+  display: flex;
+  height: 100vh;
+  background: #f5f9fd;
+  transition: all 0.3s ease;
+  overflow: hidden; 
+}
+
+/* MAIN AREA */
+.admin-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* COLLAPSED SIDEBAR EFFECT */
+.admin-layout.collapsed .admin-main {
+  margin-left: 80px;
+}
+
+/* HEADER (already fixed) */
+.admin-main > header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* CONTENT AREA */
+.admin-content {
+  padding: 24px;
+  overflow-y: auto;
+  height: calc(100vh - 70px);
+  background: linear-gradient(
+    180deg,
+    #f5f9fd,
+    #eef6fd
+  );
+}
+
+/* PAGE CARDS */
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(71, 169, 211, 0.15);
+}
+
+/* SECTION TITLE */
+.page-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+
+/* SUBTITLE */
+.page-subtitle {
+  font-size: 14px;
+  color: #475569;
+  margin-bottom: 24px;
+}
+
+/* TABLES */
+.table-wrapper {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(71, 169, 211, 0.12);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  position: sticky;
+  top: 0;
+  background: #eaf4fb;
+}
+
+th,
+td {
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 14px;
+}
+
+th {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+tbody tr:hover {
+  background: #f0f9ff;
+}
+
+/* FORMS */
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.3);
+}
+
+/* BUTTONS */
+.btn-primary {
+  background: linear-gradient(
+    135deg,
+    #47a9d3,
+    #38bdf8
+  );
+  border: none;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
+}
+.admin-sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.admin-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .admin-main {
+    margin-left: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-layout.collapsed .admin-main {
+    margin-left: 0;
+  }
+
+  .admin-main {
+    margin-left: 0;
+  }
+}

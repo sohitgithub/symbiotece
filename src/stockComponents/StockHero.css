@@ -1,0 +1,90 @@
+.stock-hero {
+  max-width: 1400px;
+  margin: 120px auto;
+  padding: 0 60px;
+  font-family: "Inter", sans-serif;
+}
+
+/* HEADER SECTION */
+.stock-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.stock-logo {
+  width: 70px;
+  height: 70px;
+}
+
+.stock-company {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.stock-price-row {
+  display: flex;
+  gap: 16px;
+  margin-top: 4px;
+  font-size: 20px;
+}
+
+.stock-price {
+  font-weight: 600;
+}
+
+.stock-change {
+  color: #05c46b;
+  font-weight: 500;
+}
+
+.stock-duration {
+  color: #808080;
+}
+
+/* CHART BOX */
+.stock-chart-box {
+  width: 92%;
+  height: 380px;
+}
+
+/* FILTER BUTTONS */
+.stock-filter-row {
+  margin-top: 40px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.stock-filter-btn {
+  padding: 8px 18px;
+  border-radius: 24px;
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+.stock-filter-btn:hover {
+  border-color: #05c46b;
+}
+
+.stock-filter-btn.active {
+  border-color: #05c46b;
+  color: #05c46b;
+  background: #e9fff3;
+}
+
+.stock-terminal-btn {
+  padding: 8px 20px;
+  border-radius: 24px;
+  background: #f3f4f6;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}

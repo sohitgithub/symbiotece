@@ -1,0 +1,393 @@
+/* ======================================= */
+/*   SMALL CLEAN CERTIFICATION STRIP       */
+/*       EXACT SECOND IMAGE LOOK           */
+/* ======================================= */
+.cert-mini-wrapper {
+  text-align: center;
+  padding: 50px 20px 40px;
+  background: #ffffff;
+  margin-top: -70px;
+}
+
+.cert-mini-title {
+  text-align: center;
+  font-size: 42px;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 20px;
+}
+
+/* 4 equal boxes – small height – clean */
+.cert-mini-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 800px;
+  height: 130px;
+  max-width: 90%;
+  margin: 0 auto;
+  margin-bottom: -90px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.cert-mini-box {
+  background: linear-gradient(90deg, #2ea0c7, #63b9d9);
+  padding: 18px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.25s ease;
+  border-right: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.cert-mini-box:last-child {
+  border-right: none;
+}
+
+.cert-mini-box:hover {
+  background: linear-gradient(90deg, #238cad, #4fafc9);
+}
+
+/* white icons */
+.cert-mini-icon {
+  width: 90px;
+  filter: brightness(0) invert(1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cert-mini-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .cert-mini-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ======================================= */
+/*              ORIGINAL FOOTER            */
+/* ======================================= */
+
+.footer-wrapper {
+  width: 100%;
+  background: #d3d3d3;
+  padding: 80px 0 30px;
+  font-family: "Inter", sans-serif;
+}
+
+.footer-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.footer-col {
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Fix logo alignment */
+.footer-col:first-child {
+  padding-left: 0;
+}
+
+.footer-logo {
+    width: 100px;
+    height: 80px;
+    margin-bottom: 15px;
+    margin-top: -17px;
+    display: block;
+
+}
+
+.footer-desc {
+  color: #111;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  font-weight: 700;
+  text-align: left;
+}
+
+.footer-text {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.footer-social-icon {
+  font-size: 24px;
+  color: #111;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.footer-social-icon:hover {
+  color: #111;
+  transform: scale(1.15);
+}
+
+/* Fix headings alignment */
+.footer-heading {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 18px;
+  color: #111;
+  width: 100%;
+  text-align: left;
+}
+
+/* Fix lists alignment */
+.footer-col ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  width: 100%;
+}
+
+.footer-col ul li {
+  margin-bottom: 12px;
+  color: #111;
+  font-size: 15px;
+  position: relative;
+  transition: 0.25s ease;
+  text-align: left;
+  width: 100%;
+}
+
+/* FIX: Remove blue color from all links, keep them black */
+.footer-col ul li a,
+.footer-col ul li Link {
+  color: #111 !important; /* Force black color */
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  transition: color 0.25s ease;
+}
+
+.footer-col ul li a:hover,
+.footer-col ul li Link:hover {
+  color: #111 !important; /* Keep black on hover */
+}
+
+/* Remove any blue underline or effects */
+.footer-col ul li:hover {
+  color: #111 !important;
+}
+
+/* Keep the underline animation but in black */
+.footer-col ul li {
+  position: relative;
+}
+
+.footer-col ul li::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 2px;
+  width: 0%;
+  background: #111; /* Black underline */
+  transition: width 0.3s ease;
+}
+
+.footer-col ul li:hover::after {
+  width: 100%;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  font-size: 14px;
+  color: #111;
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  width: 100%;
+}
+
+/* ======================================= */
+/*         RESPONSIVE DESIGN               */
+/* ======================================= */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .footer-container {
+    padding: 0 40px;
+  }
+  
+  .cert-mini-row {
+    width: 90%;
+    height: 120px;
+  }
+  
+  .cert-mini-icon {
+    width: 70px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+    padding: 0 20px;
+  }
+  
+  .footer-col {
+    align-items: center;
+    text-align: center;
+    min-width: 100%;
+  }
+  
+  .footer-logo {
+    margin: 0 auto 15px;
+  }
+  
+  .footer-desc {
+    text-align: center;
+    max-width: 100%;
+  }
+  
+  .footer-heading {
+    text-align: center;
+  }
+  
+  .footer-col ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .footer-col ul li {
+    text-align: center;
+  }
+  
+  /* Center the underline animation on mobile */
+  .footer-col ul li::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .cert-mini-row {
+    grid-template-columns: repeat(2, 1fr);
+    height: auto;
+    padding: 10px 0;
+    row-gap: 10px;
+  }
+  
+  .cert-mini-icon {
+    width: 65px;
+  }
+  
+  /* Fix mobile background overlap */
+  .footer-wrapper {
+    position: relative;
+    padding-top: 40px;
+  }
+  
+  .footer-wrapper::before {
+    content: "";
+    position: absolute;
+    top: -160px;
+    left: 0;
+    width: 100%;
+    height: 160px;
+    background: #d3d3d3;
+    z-index: 0;
+  }
+  
+  .cert-mini-wrapper {
+    position: relative;
+    z-index: 2;
+    padding: 0 15px !important;
+    margin: 0 !important;
+    margin-bottom: -40px !important;
+    background: #d3d3d3 !important;
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+  
+  .cert-mini-row {
+    display: flex !important;
+    flex-direction: column !important;
+    background: linear-gradient(90deg, #2ea0c7, #63b9d9) !important;
+    width: 100% !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+  
+  .cert-mini-box {
+    background: transparent !important;
+    border: none !important;
+    padding: 35px 0 !important;
+    margin: 0 !important;
+  }
+  
+  .cert-mini-icon {
+    width: 90px !important;
+    filter: brightness(0) invert(1) !important;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .cert-mini-title {
+    font-size: 30px;
+  }
+  
+  .cert-mini-row {
+    grid-template-columns: 1fr;
+    height: auto;
+    row-gap: 15px;
+    padding: 15px 0;
+  }
+  
+  .cert-mini-icon {
+    width: 60px;
+  }
+  
+  .footer-heading {
+    font-size: 16px;
+  }
+  
+  .footer-col ul li {
+    font-size: 14px;
+  }
+  
+  .footer-bottom {
+    font-size: 13px;
+    padding: 0 15px;
+  }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 400px) {
+  .footer-container {
+    padding: 0 15px;
+  }
+  
+  .footer-col {
+    min-width: 100%;
+  }
+}

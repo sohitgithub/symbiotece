@@ -1,0 +1,81 @@
+.shareholding-section {
+  padding-left: 120px;
+  margin-top: 50px;
+  margin-bottom: 80px;
+  width: 900px;
+}
+
+.shareholding-title {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #2d3648;
+}
+
+.shareholding-box {
+  background: white;
+  border-radius: 14px;
+  padding: 32px;
+  border: 1px solid #e8e8e8;
+}
+
+.shareholding-switch {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.switch-btn {
+  padding: 10px 22px;
+  border-radius: 30px;
+  border: none;
+  font-size: 15px;
+  background: #f4f7f6;
+  color: #4b5563;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.switch-btn.active {
+  background: #e0fff2;
+  color: #00c68f;
+  font-weight: 600;
+}
+
+.shareholding-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.shareholding-row {
+  display: grid;
+  grid-template-columns: 220px 1fr 80px;
+  align-items: center;
+}
+
+.sh-label {
+  font-size: 17px;
+  color: #2d3648;
+}
+
+.sh-bar-wrapper {
+  height: 10px;
+  width: 100%;
+  background: #f0f5f4;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.sh-bar-fill {
+  height: 100%;
+  background: #05c39f;
+  border-radius: 6px;
+}
+
+.sh-percent {
+  font-size: 16px;
+  color: #2d3648;
+  font-weight: 500;
+  text-align: right;
+}

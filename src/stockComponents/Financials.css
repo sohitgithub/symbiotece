@@ -1,0 +1,92 @@
+.financials-section {
+  padding-left: 120px;
+  margin-top: 50px;
+  font-family: "Inter", sans-serif;
+}
+
+.fin-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 22px;
+  color: #1c1c1c;
+}
+
+/* CARD */
+.fin-card {
+  width: 800px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 0;
+}
+
+/* TOP TABS */
+.fin-tabs {
+  display: flex;
+  gap: 32px;
+  padding: 20px 30px 10px 30px;
+}
+
+.fin-tab {
+  background: none;
+  border: none;
+  font-size: 17px;
+  padding-bottom: 6px;
+  cursor: pointer;
+  color: #6b7280;
+  position: relative;
+}
+
+.fin-tab.active {
+  color: #00B894;
+  font-weight: 600;
+}
+
+.fin-tab.active::after {
+  content: "";
+  position: absolute;
+  width: 60%;
+  height: 3px;
+  background: #00B894;
+  bottom: -6px;
+  left: 0;
+  border-radius: 3px;
+}
+
+/* VALUES NOTE (RIGHT) */
+.fin-values-note {
+  text-align: right;
+  padding-right: 25px;
+  margin-top: -20px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* CHART BOX */
+.fin-chart-box {
+  height: 330px;
+  padding: 0 25px;
+}
+
+/* QUARTERLY / YEARLY BUTTONS */
+.fin-duration {
+  display: flex;
+  gap: 12px;
+  padding: 20px 30px 25px 30px;
+}
+
+.duration-btn {
+  padding: 8px 26px;
+  border-radius: 30px;
+  font-size: 16px;
+  border: 1px solid transparent;
+  background: #f3f4f6;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.duration-btn.active {
+  background: #ddf7ed;
+  border-color: #00B894;
+  color: #00B894;
+}

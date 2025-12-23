@@ -1,0 +1,94 @@
+/* --- CONTAINER --- */
+.governance-container {
+  padding: 20px;
+  font-family: 'Inter', sans-serif;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* --- TABS STYLING --- */
+.governance-tabs {
+  display: flex;
+  gap: 28px;
+  border-bottom: 1px solid #e8e8e8;
+  padding-bottom: 0px;
+  margin-bottom: 30px;
+  overflow-x: auto; /* Allows scrolling on small screens */
+  white-space: nowrap;
+}
+
+/* Hide scrollbar for cleaner look */
+.governance-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.gov-tab {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #555;
+  padding: 10px 4px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.gov-tab:hover {
+  color: #4da3ff;
+}
+
+.gov-tab.active {
+  color: #4da3ff; /* Blue Active Color */
+  border-bottom: 3px solid #4da3ff;
+  font-weight: 600;
+}
+
+/* --- DOCUMENT GRID SYSTEM --- */
+.doc-grid {
+  display: grid;
+  /* Creates 4 columns automatically, adjusts if screen is smaller */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+  gap: 24px;
+}
+
+/* --- DOCUMENT CARD STYLING --- */
+.doc-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Pushes icon top, text bottom */
+  height: 180px; /* Fixed height like the screenshot */
+  padding: 24px;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.doc-card:hover {
+  border-color: #4da3ff; /* Blue border on hover */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  transform: translateY(-4px);
+}
+
+.doc-icon {
+  font-size: 24px;
+  color: #6b7280; /* Grey Icon */
+}
+
+.doc-title {
+ font-size: 15px;
+  color: #333;
+  line-height: 1.45;
+  /* font-weight: 500; */
+}
+
+/* --- EMPTY STATE --- */
+.empty-state {
+  padding: 40px;
+  text-align: center;
+  color: #888;
+  background: #f9f9f9;
+  border-radius: 8px;
+}

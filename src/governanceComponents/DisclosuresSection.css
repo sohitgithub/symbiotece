@@ -1,0 +1,147 @@
+/* ============================
+   WRAPPER
+============================ */
+.disclosures-section {
+  padding: 40px 0 80px;
+  font-family: "Inter", sans-serif;
+}
+
+.disclosures-heading {
+  font-size: 20px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 24px;
+  line-height: 1.4;
+}
+
+/* ============================
+   TABLE WRAPPER
+============================ */
+.disclosures-table-wrapper {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.04);
+  overflow: hidden;
+  width: 100%;
+}
+
+/* ============================
+   TABLE LAYOUT
+============================ */
+.disclosures-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+/* TABLE HEADERS */
+.disclosures-table thead th {
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+  padding: 16px 24px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.disc-col-index {
+  width: 60px;
+  text-align: center;
+}
+
+.disc-col-name {
+  text-align: left;
+}
+
+.disc-col-link {
+  width: 80px;
+  text-align: right;
+}
+
+/* ============================
+   TABLE BODY ROWS
+============================ */
+.disclosures-table tbody td {
+  font-size: 15px;
+  color: #111827;
+  padding: 18px 24px;
+  border-bottom: 1px solid #f3f4f6;
+  word-break: break-word;
+}
+
+/* Remove border for last row */
+.disclosures-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Hover effect */
+.disclosures-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+/* Link icon */
+.disc-link-icon {
+  display: inline-flex;
+  justify-content: flex-end;
+  font-size: 18px;
+  color: #6b7280;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.disc-link-icon:hover {
+  color: #4da3ff;
+  transform: translateY(-1px);
+}
+
+/* ============================
+   MOBILE RESPONSIVE
+============================ */
+@media (max-width: 700px) {
+  /* Hide table header on mobile */
+  .disclosures-table thead {
+    display: none;
+  }
+
+  /* Turn each row into a card */
+  .disclosures-table,
+  .disclosures-table tbody,
+  .disclosures-table tr,
+  .disclosures-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .disclosures-table tr {
+    background: #ffffff;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+  }
+
+  .disclosures-table tbody td {
+    padding: 6px 0;
+    border: none;
+  }
+
+  /* Index becomes badge */
+  .disclosures-table td.disc-col-index {
+    font-weight: 600;
+    color: #6b7280;
+    margin-bottom: 6px;
+  }
+
+  /* Title */
+  .disclosures-table td.disc-col-name {
+    font-size: 15px;
+    margin-bottom: 10px;
+    color: #111827;
+  }
+
+  /* Icon right aligned */
+  .disclosures-table td.disc-col-link {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 6px;
+  }
+}

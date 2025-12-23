@@ -1,0 +1,263 @@
+.kh-section {
+  padding: 60px 20px;
+  width: 100%;
+  text-align: center;
+  margin-top: 0px;
+}
+
+.kh-fullwidth {
+  width: 100vw;
+  margin-top: 10px;
+  background: #e9e7e7;
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.kh-main-heading {
+  text-align: center;
+  font-size: 42px;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 15px;
+}
+
+.kh-subtitle {
+  font-size: 18px;
+  color: #111;
+  margin-bottom: 15px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.kh-block-title {
+  text-align: center;
+  font-size: 35px;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 40px;
+}
+
+/* ROWS */
+.feature-row.three,
+.feature-row.two {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 70px;
+  margin-bottom: 40px;
+}
+
+/* CARDS */
+/* UNIFORM PERFECT CARD LAYOUT */
+.feature-card {
+  width: 300px;
+  background: #fff;
+  border-radius: 18px;
+  padding: 30px 20px;
+  text-align: center;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+
+  /* FIXED & PERFECT ALIGNMENT */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* align-items: center; */
+
+  height: 320px; /* FIXED uniform height */
+  
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.5s ease;
+}
+
+.feature-card.kh-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* FIX ICON SIZE */
+.feature-lottie {
+  width: 110px !important;
+  height: 110px !important;  /* keeps icons consistent */
+  margin-bottom: 18px;
+}
+.feature-img {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  margin-bottom: 18px;
+  transition: 0.3s ease;
+}
+
+/* TITLE */
+.feature-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111;
+  margin: 8px 0;
+}
+
+/* DESCRIPTION */
+.feature-desc {
+  font-size: 16px;
+  color: #555;
+  margin-top: 8px;
+  line-height: 1.4;
+}
+
+/* ==========================================
+   BLACK → BLUE ICON HOVER FADE (GLOBAL)
+========================================== */
+
+.kh-icon-wrapper {
+  position: relative;
+  width: 125px;
+  height: 110px;
+  margin-bottom: 18px;
+}
+
+.kh-icon-wrapper img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity 0.35s ease-in-out;
+}
+
+.black-img {
+  opacity: 1;
+}
+
+.blue-img {
+  opacity: 0;
+}
+
+/* On card hover */
+.feature-card:hover .black-img {
+  opacity: 0;
+}
+
+.feature-card:hover .blue-img {
+  opacity: 1;
+}
+
+
+/* ========================== */
+/*      RESPONSIVE FIXES      */
+/* ========================== */
+
+/* TABLETS */
+@media (max-width: 900px) {
+
+  .kh-section {
+    margin-top: -40px !important;  /* was -90 → reduced */
+    padding-top: 40px;
+  }
+
+  .kh-fullwidth {
+    margin-top: -30px !important; /* was -60 → reduced */
+    padding: 18px;
+  }
+
+  .kh-main-heading {
+    font-size: 34px;
+  }
+
+  .kh-block-title {
+    font-size: 30px;
+  }
+}
+
+/* LARGE MOBILE */
+@media (max-width: 600px) {
+
+  .kh-section {
+    margin-top: -20px !important; /* pull closer to remove big gap */
+    padding-top: 20px;
+  }
+
+  .kh-fullwidth {
+    margin-top: -15px !important;
+  }
+
+  .kh-main-heading {
+    font-size: 30px;
+  }
+
+  .kh-subtitle {
+    font-size: 16px;
+    padding: 0 10px;
+  }
+
+  .feature-card {
+    width: 90%;
+    height: 300px; /* better fit */
+  }
+}
+
+/* NORMAL MOBILE */
+@media (max-width: 480px) {
+
+  .kh-section {
+    margin-top: -5px !important; 
+  }
+
+  .kh-fullwidth {
+    margin-top: -10px !important;
+  }
+
+  .kh-main-heading {
+    font-size: 26px;
+  }
+
+  .kh-block-title {
+    font-size: 26px;
+  }
+
+  .feature-card {
+    width: 95%;
+    height: 290px;
+  }
+  .feature-row.two{
+    padding-top:25px;
+  }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 380px) {
+
+  .kh-section {
+    margin-top: 0 !important; /* fully remove negative spacing */
+  }
+
+  .kh-fullwidth {
+    margin-top: 0 !important;
+  }
+
+  .feature-card {
+    height: 280px;
+  }
+
+  .feature-title {
+    font-size: 18px;
+  }
+
+  .feature-desc {
+    font-size: 14px;
+  }
+}
+
+
+.feature-card {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Reduce spacing between cards */
+.feature-row.three,
+.feature-row.two {
+  gap: 40px !important;   /* Was 70 → now much tighter */
+  margin-bottom: 25px !important;
+}

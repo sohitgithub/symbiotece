@@ -1,0 +1,93 @@
+/* MAIN WRAPPER */
+.member-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 140px 120px 80px 120px; /* Top padding fixed for navbar overlap */
+  gap: 80px;
+  max-width: 1500px;
+  margin: auto;
+}
+
+/* LEFT SIDE */
+.member-left {
+  width: 60%;
+}
+
+/* NAME */
+.board-member-name {
+  font-size: 44px;
+  font-weight: 700;
+  color: #1b1b1b;
+  margin-bottom: 2px;
+}
+
+/* ROLE */
+.board-member-role {
+  font-size: 20px;
+  font-weight: 400;
+  color: #555;
+  margin-bottom: 28px;
+}
+
+/* BIO PARAGRAPH */
+.member-bio {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #444;
+  max-width: 90%;
+}
+
+/* RIGHT SIDE IMAGE CONTAINER */
+.member-right {
+  width: 40%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* PROFILE PHOTO */
+.member-photo {
+  width: 360px;      /* Final perfect size */
+  height: auto;
+  object-fit: cover;
+  border-radius: 4px;
+  background: #e6e6e6;
+  padding: 0;
+}
+
+/* RESPONSIVE FIXES */
+@media (max-width: 1100px) {
+  .member-wrapper {
+    flex-direction: column;
+    gap: 40px;
+    padding: 120px 40px 60px 40px;
+  }
+
+  .member-left,
+  .member-right {
+    width: 100%;
+  }
+
+  .member-photo {
+    width: 300px;
+    margin: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .member-wrapper {
+    padding: 100px 20px 40px 20px;
+  }
+
+  .member-name {
+    font-size: 32px;
+  }
+
+  .member-role {
+    font-size: 18px;
+  }
+
+  .member-bio {
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,108 @@
+.kh-section {
+  padding: 60px 20px;
+  width: 100%;
+  text-align: center;
+  margin-top: -90px;
+}
+
+.kh-fullwidth {
+  width: 100vw;
+  margin-top: -60px;
+  background: #e9e7e7;
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 35px;
+}
+
+.kh-main-heading {
+  text-align: center;
+  font-size: 42px;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 15px;
+}
+
+.kh-subtitle {
+  font-size: 18px;
+  color: #111;
+  margin-bottom: 15px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.kh-block-title {
+  text-align: center;
+  font-size: 35px;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 40px;
+}
+
+/* ROWS */
+.feature-row.three,
+.feature-row.two {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 70px;
+  margin-bottom: 40px;
+}
+
+/* CARDS */
+/* UNIFORM PERFECT CARD LAYOUT */
+.feature-card {
+  width: 300px;
+  background: #fff;
+  border-radius: 18px;
+  padding: 30px 20px;
+  text-align: center;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+
+  /* FIXED & PERFECT ALIGNMENT */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 320px; /* FIXED uniform height */
+  
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.5s ease;
+}
+
+.feature-card.kh-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* FIX ICON SIZE */
+.feature-lottie {
+  width: 110px !important;
+  height: 110px !important;  /* keeps icons consistent */
+  margin-bottom: 18px;
+}
+
+/* TITLE */
+.feature-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111;
+  margin: 8px 0;
+}
+
+/* DESCRIPTION */
+.feature-desc {
+  font-size: 16px;
+  color: #555;
+  margin-top: 8px;
+  line-height: 1.4;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .feature-card {
+    width: 90%;
+  }
+}

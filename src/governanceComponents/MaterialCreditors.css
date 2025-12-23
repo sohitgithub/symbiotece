@@ -1,0 +1,89 @@
+/* ============================
+   WRAPPER
+============================ */
+.material-wrapper {
+  padding: 40px 0;
+  font-family: "Inter", sans-serif;
+  width: 100%;
+}
+
+/* ============================
+   GRID
+============================ */
+.material-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+  width: 100%;
+}
+
+/* ============================
+   CARD
+============================ */
+.material-card {
+  background: #fff;
+  padding: 26px 22px;
+  border-radius: 14px;
+  border: 1px solid #e6e6e6;
+  min-height: 150px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.material-card:hover {
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  transform: translateY(-4px);
+}
+
+/* ============================
+   ICON
+============================ */
+.material-icon {
+  font-size: 26px;
+  color: #565c63;
+}
+
+/* ============================
+   TEXT
+============================ */
+.material-text {
+  font-size: 15px;
+  color: #333;
+  line-height: 1.45;
+  font-weight: 500;
+}
+
+/* ============================
+   RESPONSIVE
+============================ */
+@media (max-width: 1200px) {
+  .material-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .material-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .material-card {
+    min-height: 140px;
+  }
+}
+
+@media (max-width: 600px) {
+  .material-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .material-card {
+    padding: 22px 18px;
+    min-height: auto;
+  }
+}

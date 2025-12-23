@@ -1,0 +1,116 @@
+/* =========================
+   PAGE WRAPPER
+========================= */
+.ann-page {
+  padding: 100px 120px 40px;
+  margin-top: 70px;
+  width: 100%;
+  background:#fff;
+  color: #1b1b1b;
+  font-family: "Inter", sans-serif;
+}
+
+.ann-title {
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: #0f1d40;
+  text-align: left;
+
+}
+
+/* =========================
+   FILTERS
+========================= */
+.ann-filters {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+/* =========================
+   ANNOUNCEMENT LIST
+========================= */
+.ann-list {
+  margin-top: 10px;
+}
+
+.ann-item {
+  padding: 14px 0;
+}
+
+.ann-date {
+  font-size: 14px;
+  font-weight: 500;
+  color: #6f6f6f;
+  margin-bottom: 6px;
+}
+
+.ann-text {
+  font-size: 18px;
+  font-weight: 500;
+  color: #6f6f6f;
+  margin-bottom: 18px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  text-decoration: none;
+}
+
+.ann-text:hover {
+  color: #00b386;
+}
+
+/* Divider line */
+.ann-divider {
+  width: 100%;
+  height: 1px;
+  background: #e8e8e8;
+  margin: 4px 0 14px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 900px) {
+  .ann-page {
+    padding: 30px 20px;
+    margin-top: 70px;
+  }
+
+  .ann-title {
+    font-size: 26px;
+  }
+
+  .ann-filters {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .ann-text {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ann-page {
+    padding: 24px 16px;  /* tighter like groww mobile */
+  }
+
+  .ann-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .ann-item {
+    padding: 12px 0;
+  }
+
+  .ann-text {
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .ann-divider {
+    margin: 8px 0 18px;
+  }
+}

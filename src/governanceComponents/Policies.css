@@ -1,0 +1,90 @@
+/* ============================
+   WRAPPER
+============================ */
+.policies-wrapper {
+  padding: 40px 0;
+  font-family: "Inter", sans-serif;
+  width: 100%;
+}
+
+/* ============================
+   GRID LAYOUT
+============================ */
+.policies-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+  width: 100%;
+}
+
+/* ============================
+   POLICY CARD
+============================ */
+.policy-card {
+  background: #fff;
+  padding: 26px 22px;
+  border-radius: 14px;
+  border: 1px solid #e6e6e6;
+  min-height: 150px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 14px;
+
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.policy-card:hover {
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  transform: translateY(-4px);
+}
+
+/* ============================
+   ICON
+============================ */
+.policy-icon {
+  font-size: 26px;
+  color: #565c63;
+}
+
+/* ============================
+   TEXT
+============================ */
+.policy-text {
+  font-size: 15px;
+  color: #333;
+  line-height: 1.45;
+  font-weight: 500;
+}
+
+/* ============================
+   RESPONSIVE LAYOUT
+============================ */
+@media (max-width: 1200px) {
+  .policies-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .policies-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .policy-card {
+    min-height: 140px;
+  }
+}
+
+@media (max-width: 600px) {
+  .policies-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .policy-card {
+    padding: 22px 18px;
+    min-height: auto; /* shrink to content on mobile */
+  }
+}

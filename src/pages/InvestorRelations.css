@@ -1,0 +1,195 @@
+.ir-wrapper {
+  padding: 120px 40px;
+  max-width: 1200px;
+  margin: auto;
+  font-family: "Inter", sans-serif;
+}
+
+/* HERO */
+.ir-hero {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.ir-hero h1 {
+  text-align: center;
+  font-size: 42px;
+  font-weight: 800;
+  color: #0f1d40;
+  margin-bottom: 15px
+}
+
+.ir-hero p {
+  color: #555;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+/* DOWNLOAD CARDS */
+.ir-downloads h2,
+.ir-highlights h2,
+.ir-links h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+.ir-download-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.ir-download-card {
+  background: white;
+  border-radius: 14px;
+  padding: 28px 20px;
+  text-align: center;
+  border: 1px solid #eaeaea;
+  transition: 0.3s;
+}
+
+.ir-download-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.ir-icon {
+  font-size: 40px;
+  color: #4da3ff;
+  margin-bottom: 10px;
+}
+
+.ir-btn {
+  margin-top: 12px;
+  background: #4da3ff;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.ir-btn:hover {
+  background: #3390ff;
+}
+
+/* FINANCIAL HIGHLIGHTS */
+.ir-highlights {
+  margin: 60px 0;
+}
+
+.ir-highlight-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+
+.ir-highlight-card {
+  background: white;
+  border: 1px solid #eaeaea;
+  padding: 30px 20px;
+  border-radius: 14px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.ir-highlight-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.07);
+}
+
+.ir-highlight-card h3 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #4da3ff;
+}
+
+.ir-highlight-card p {
+  margin-top: 8px;
+  color: #444;
+}
+
+/* QUICK LINKS */
+.ir-links-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.ir-link-card {
+  background: white;
+  border: 1px solid #eaeaea;
+  padding: 24px 20px;
+  border-radius: 14px;
+  text-decoration: none;
+  color: inherit;
+  transition: 0.3s;
+}
+
+.ir-link-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.07);
+}
+
+.ir-link-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.ir-link-card p {
+  margin-top: 6px;
+  color: #555;
+}
+
+/* CONTACT IR */
+.ir-contact {
+  margin-top: 60px;
+  background: #e6f4f7;
+  border: 1px solid #dfe9f5;
+  padding: 40px 20px;
+  border-radius: 14px;
+  text-align: center;
+}
+
+.ir-contact h2 {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.ir-contact p {
+  margin-top: 8px;
+  color: #444;
+}
+
+.ir-contact-btn {
+  margin-top: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #4da3ff;
+  padding: 12px 22px;
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.ir-contact-btn:hover {
+  background: #3390ff;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .ir-download-grid,
+  .ir-highlight-grid,
+  .ir-links-grid {
+    grid-template-columns: 1fr;
+  }
+}
