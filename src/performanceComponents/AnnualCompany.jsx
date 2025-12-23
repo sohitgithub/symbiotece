@@ -46,7 +46,7 @@ export default function AnnualCompany() {
       {Object.keys(companyData).length === 0 && <p className="empty-msg">No reports available.</p>}
 
       {Object.keys(companyData)
-        .sort((a, b) => b.localeCompare(a)) // Sort text years descending
+        .sort((a, b) => b.localeCompare(a)) 
         .map((year) => (
           <div key={year} className="year-section">
             <h2 className="year-title">{year}</h2>

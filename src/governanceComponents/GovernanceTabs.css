@@ -92,3 +92,78 @@
   background: #f9f9f9;
   border-radius: 8px;
 }
+
+
+ /* === DISCLOSURES TABLE === */
+
+.disclosures-wrapper {
+  margin-top: 10px;
+}
+
+.disclosures-heading {
+  font-size: 22px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 28px;
+}
+
+.disclosures-table {
+  border-top: 1px solid #e5e7eb;
+}
+
+.disclosures-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 80px;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.disclosures-header {
+  font-weight: 600;
+  color: #374151;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.col-index {
+  text-align: center;
+  color: #374151;
+  font-weight: 500;
+}
+
+.col-name {
+  font-size: 16px;
+  color: #374151;
+}
+
+.col-link {
+  text-align: center;
+}
+
+.col-link a {
+  color: #374151;
+  transition: color 0.2s ease;
+}
+
+.col-link a:hover {
+  color: #2563eb;
+}
+
+/* Hover row like screenshot */
+.disclosures-row:not(.disclosures-header):hover {
+  background: #f9fafb;
+}
+
+
+.disclosure-tab-link {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #374151;
+}
+
+.disclosure-tab-link:hover {
+  color: #2563eb;
+}

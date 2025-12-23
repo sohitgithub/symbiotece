@@ -2,28 +2,24 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom"; 
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import "../governanceComponents/CommitteeComposition.css"
 
 
 // --- Magic Image Function ---
 const getImageUrl = (url) => {
   if (!url) return '';
 
-  // Google Drive Links handle karna
   if (url.includes('drive.google.com')) {
-    // ID extract karne ke liye pattern
     const idMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
     
     if (idMatch && idMatch[1]) {
-      // 🔥 TRICK: Ye link direct image stream karta hai (Faster & Reliable)
       return `https://lh3.googleusercontent.com/d/${idMatch[1]}`;
     }
   }
 
-  // Normal links ke liye
   return url;
 };
 
-// --- Custom SVG Icon for Documents ---
 const DocumentIcon = () => (
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M14 2H6C5.47 2 4.96 2.21 4.59 2.59C4.21 2.96 4 3.47 4 4V20C4 20.53 4.21 21.04 4.59 21.41C4.96 21.79 5.47 22 6 22H18C18.53 22 19.04 21.79 19.41 21.41C19.79 21.04 20 20.53 20 20V8L14 2Z" />
@@ -36,17 +32,30 @@ const DocumentIcon = () => (
 
 export default function GovernancePage() {
 const [activeTab, setActiveTab] = useState("Board");
+const [annualTab, setAnnualTab] = useState("company");
+
   const location = useLocation();
 const navigate = useNavigate();
 
 
   const tabs = [
     "Board", "Committee Composition", "Policies", "Offer Documents",
-    "Shareholding Pattern", "Secreterial & Regulatory Compliance",
-    "Material Creditors", "Industry Report", "Scheme of Arrangements"
+    "Shareholding Pattern", "Secretarial & Regulatory Compliance",
+    "Material Creditors", "Industry Report", "Disclosures"
   ];
 
-  // --- BOARD MEMBERS DATA ---
+
+  const disclosuresData = [
+  { id: 1, title: "Details of Business", link: "https://symbiotec.com/" },
+  { id: 2, title: "Terms & Conditions of Appointment of Independent Director", link: "/public/documents/tcappointment.pdf" },
+  {
+    id: 3,
+    title: "Composition of Committees of Board of Directors",
+    tab: "Committee Composition"
+  }
+];
+
+
   const boardMembers = [
     {
       img: "/images/boardimages/board-anil-satwani.png",
@@ -75,7 +84,7 @@ const navigate = useNavigate();
     {
       img: "/images/boardimages/board-rohit.png",
       name: "Mr Rohit Mantri",
-      role: "Independent Director", // Updated to Independent Director
+      role: "Independent Director", 
       slug: "rohit-mantri"
     },
     {
@@ -88,11 +97,12 @@ const navigate = useNavigate();
 
   // --- DOCUMENTS DATA ---
   const documentData = {
-    "Committee Composition": [
-      { id: 101, title: "Composition of Board Committees_SPL", link: "https://docs.google.com/document/d/17M5cpa3_2ssuOSKlgGY4huoP-S29_TPI/edit?usp=sharing" },
-    ],
+
     "Offer Documents": [
-      { id: 105, title: "Draft Red Herring Prospectus", link: "https://drive.google.com/file/d/1Ev8HhnTPmGOPhOU52dbiun6jSFr7Bt3B/view?usp=sharing" }
+      { id: 105, title: "Draft Red Herring Prospectus (DRHP)", link: "https://drive.google.com/file/d/1Ev8HhnTPmGOPhOU52dbiun6jSFr7Bt3B/view?usp=sharing" },
+       { id: 106, title: "Symbiotec Audio Visual DRHP-Hindi", link: "https://drive.google.com/file/d/1Ev8HhnTPmGOPhOU52dbiun6jSFr7Bt3B/view?usp=sharing" },
+        { id: 107, title: "Symbiotec Audio Visual DRHP-English", link: "https://drive.google.com/file/d/1Ev8HhnTPmGOPhOU52dbiun6jSFr7Bt3B/view?usp=sharing" },
+
     ],
 
       "Material Creditors": [
@@ -123,9 +133,10 @@ const navigate = useNavigate();
       { id: 221, title: "Policy on Diversity of Board of Directors", link: "https://drive.google.com/file/d/1uUcOaIMi28WYPQeYo7Fnr5ttjb5de2ui/view?usp=sharing" },
     ],
     "Shareholding Pattern": [
-      { id: 301, title: "Shareholding Pattern - Q1 2024", link: "https://drive.google.com/file/d/1ZCHWnSvYBmV2Pry8q_jhcRUoVuJdNYC3/view?usp=sharing" },
+      { id: 301, title: "Shareholding Pattern - Q1 2024", link: "/public/documents/Shareholding.pdf" },
+      
     ],
-    "Secreterial & Regulatory Compliance": [
+    "Secretarial & Regulatory Compliance": [
       { id: 401, title: "Annual Returns - Knovea 2022", link: "https://drive.google.com/file/d/1EtQZmlJY2LTa59V6ql2NMABJneNOk4hj/view?usp=sharing" },
       { id: 402, title: "Annual Returns - Knovea 2023", link: "https://drive.google.com/file/d/1SrdG_DVHTNpLKhPAtk1hw29tYm0Rbs1j/view?usp=sharing" },
       { id: 403, title: "Annual Returns - Knovea 2024", link: "https://drive.google.com/file/d/1VFvdmJy0_6xtFEDMs6i3uknwn3x2JXI-/view?usp=sharing" },
@@ -230,8 +241,12 @@ const navigate = useNavigate();
               </Link>
             ))}
           </div>
-        ) : (
-          currentDocuments.length > 0 ? (
+     ) : (
+activeTab !== "Committee Composition" &&
+activeTab !== "Secretarial & Regulatory Compliance" &&
+activeTab !== "Disclosures" &&
+  currentDocuments.length > 0 ? (
+
             <div className="doc-grid">
               {currentDocuments.map((doc) => (
                 <a
@@ -250,13 +265,261 @@ const navigate = useNavigate();
                 </a>
               ))}
             </div>
-          ) : (
-            <div className="empty-state">
-              <p>No documents available for <strong>{activeTab}</strong> yet.</p>
-            </div>
-          )
+          ):""
         )}
       </div>
+
+
+
+      {activeTab === "Disclosures" && (
+  <div className="disclosures-wrapper">
+
+    <h3 className="disclosures-heading">
+  Disclosures under Regulation 46 of SEBI (LODR) Regulations   
+    </h3>
+
+    <div className="disclosures-table">
+
+      <div className="disclosures-row disclosures-header">
+        <div className="col-index"></div>
+        <div className="col-name">Name</div>
+        <div className="col-link">Link</div>
+      </div>
+
+      {disclosuresData.map((item) => (
+        <div key={item.id} className="disclosures-row">
+          <div className="col-index">{item.id}</div>
+          <div className="col-name">{item.title}</div>
+         <div className="col-link">
+  {item.tab ? (
+    <button
+      onClick={() => {
+        setActiveTab(item.tab);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }}
+      className="disclosure-tab-link"
+    >
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14 3h7v7" />
+        <path d="M10 14L21 3" />
+        <path d="M21 14v7h-7" />
+        <path d="M3 10v11h11" />
+      </svg>
+    </button>
+  ) : (
+    <a href={item.link} rel="noopener noreferrer">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14 3h7v7" />
+        <path d="M10 14L21 3" />
+        <path d="M21 14v7h-7" />
+        <path d="M3 10v11h11" />
+      </svg>
+    </a>
+  )}
+</div>
+
+        </div>
+      ))}
+    </div>
+
+  </div>
+)}
+
+
+
+      {activeTab === "Secretarial & Regulatory Compliance" && (
+  <div className="annual-wrapper">
+
+    <h3 className="committee-title">Annual Returns</h3>
+
+    <div className="annual-tabs">
+      <button
+        className={annualTab === "company" ? "active" : ""}
+        onClick={() => setAnnualTab("company")}
+      >
+        Company
+      </button>
+
+      <button
+        className={annualTab === "subsidiaries" ? "active" : ""}
+        onClick={() => setAnnualTab("subsidiaries")}
+      >
+        Subsidiaries
+      </button>
+    </div><br></br>
+
+    {/* COMPANY TAB */}
+    {annualTab === "company" && (
+      <div className="doc-grid">
+        {documentData["Secretarial & Regulatory Compliance"].map((doc) => (
+          <a
+            key={doc.id}
+            href={doc.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="doc-card"
+          >
+            <div className="doc-icon-wrapper">
+              <DocumentIcon />
+            </div>
+            <div className="doc-info">
+              <p className="doc-title">{doc.title}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    )}
+
+    {/* SUBSIDIARIES TAB */}
+    {annualTab === "subsidiaries" && (
+      <div className="empty-state">
+        <p>No subsidiary annual returns available.</p>
+      </div>
+    )}
+  </div>
+)}
+
+
+
+      {activeTab === "Committee Composition" && (
+  <div className="committee-wrapper">
+
+    {/* Audit Committee */}
+    <div className="committee-block">
+      <h3 className="committee-title">Audit Committee</h3>
+
+      <div className="committee-grid">
+        <div className="committee-member">
+          <p className="member-name">Mrs. Sunita Kishnani </p>
+          <span className="member-role">Chairperson</span>
+        </div>
+
+        <div className="committee-member">
+          <p className="member-name">Mr. Partik Patel </p>
+           <span className="member-role">Member</span>
+        </div>
+
+        <div className="committee-member">
+          <p className="member-name">Mr. Anil Satwani </p>
+          <span className="member-role">Member</span>
+        </div>
+      </div>
+    </div>
+
+    {/* Nomination & Remuneration */}
+    <div className="committee-block">
+      <h3 className="committee-title">Nomination and Remuneration Committee</h3>
+
+      <div className="committee-grid">
+        <div className="committee-member">
+          <p className="member-name">Mr. Pratik Patel </p>
+          <span className="member-role">Chairperson</span>
+        </div>
+
+        <div className="committee-member">
+          <p className="member-name">Mrs. Sunita Kishnani </p>
+          <span className="member-role">Member</span>
+        </div>
+
+        <div className="committee-member">
+          <p className="member-name">Mr. Hariharnath Buggana </p>
+          <span className="member-role">Member</span>
+        </div>
+      </div>
+    </div>
+
+
+      <div className="committee-block">
+      <h3 className="committee-title">Stakeholder Relationship Committee</h3>
+
+      <div className="committee-grid">
+        <div className="committee-member">
+          <p className="member-name">Mr. Pratik Patel </p>
+          <span className="member-role">Chairperson</span>
+        </div>
+
+        <div className="committee-member">
+          <p className="member-name">Mrs. Sunita Kishnani </p>
+          <span className="member-role">Member</span>
+        </div>
+
+        <div className="committee-member">
+          <p className="member-name">Mr. Anil Satwani</p>
+          <span className="member-role">Member</span>
+        </div>
+      </div>
+    </div>
+
+    {/* Risk Management */}
+    <div className="committee-block">
+      <h3 className="committee-title">Risk Management Committee</h3>
+
+      <div className="committee-grid four-col">
+        <div className="committee-member">
+          <p className="member-name">Mr. Anil Satwani</p>
+          <span className="member-role">Chairperson</span>
+        </div>
+
+        <div className="committee-member">
+          <p className="member-name">Mrs. Sunita Kishnani</p>
+          <span className="member-role">Member</span>
+        </div>
+
+        <div className="committee-member">
+          <p className="member-name">Mr. Rohit Mantri</p>
+          <span className="member-role">Member</span>
+        </div>
+
+        <div className="committee-member">
+          <p className="member-name">Mr. Hariharnath Buggana</p>
+          <span className="member-role">Member</span>
+        </div>
+
+          <div className="committee-member">
+          <p className="member-name">Mr. Raghavender
+Ramachandran</p>
+<span className="member-role">Member</span>
+        </div>
+
+          <div className="committee-member">
+          <p className="member-name">Mr. Salil Jain</p>
+          <span className="member-role">Member</span>
+        </div>
+      </div>
+    </div>
+
+    {/* CSR */}
+    <div className="committee-block">
+      <h3 className="committee-title">Corporate Social Responsibility Committee</h3>
+
+      <div className="committee-grid four-col">
+        <div className="committee-member">
+          <p className="member-name">Mr. Anil Satwani </p>
+              <span className="member-role">Chairperson</span>
+        </div>
+
+        <div className="committee-member">
+          <p className="member-name">Mr. Pratik Patel </p>
+          <span className="member-role">Member</span>
+        </div>
+
+        <div className="committee-member">
+          <p className="member-name">Mr. Hariharnath Buggana</p>
+          <span className="member-role">Member</span>
+        </div>
+
+        <div className="committee-member">
+          <p className="member-name">Mr. Rohit Mantr</p>
+          <span className="member-role">Member</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+)}
+
 
     </div>
   );
