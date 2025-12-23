@@ -21,7 +21,8 @@ export default function BoardMembers() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
-  const initialFormState = { name: "", designation: "", status: "Active", imageFile: null };
+  // ✅ Added 'bio' to initial state
+  const initialFormState = { name: "", designation: "", bio: "", status: "Active", imageFile: null };
   const [formData, setFormData] = useState(initialFormState);
 
   // --- FETCH DATA ---
@@ -61,6 +62,7 @@ export default function BoardMembers() {
     const dataToSend = new FormData();
     dataToSend.append("name", formData.name);
     dataToSend.append("designation", formData.designation);
+    dataToSend.append("bio", formData.bio); // ✅ Send Bio
     dataToSend.append("status", formData.status);
     if (formData.imageFile) dataToSend.append("imageFile", formData.imageFile);
 
@@ -101,6 +103,20 @@ export default function BoardMembers() {
         <label>Designation</label>
         <input type="text" name="designation" value={formData.designation} onChange={handleInputChange} required placeholder="e.g. Managing Director" />
       </div>
+      
+      {/* ✅ Bio Input Field */}
+      <div className="form-group">
+        <label>Biography</label>
+        <textarea 
+          name="bio" 
+          value={formData.bio} 
+          onChange={handleInputChange} 
+          rows="5"
+          placeholder="Enter detailed profile..."
+          style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #ccc' }}
+        ></textarea>
+      </div>
+
        <div className="form-group">
         <label>Profile Image {isEdit && <span className="hint">(Optional)</span>}</label>
         <div className="file-input-wrapper">
@@ -160,7 +176,14 @@ export default function BoardMembers() {
                     <td className="actions-cell">
                         <button className="icon-btn edit-btn" onClick={() => { 
                             setSelectedItem(item); 
-                            setFormData({ name: item.name, designation: item.designation, status: item.status, imageFile: null }); 
+                            // ✅ Populate Bio on Edit
+                            setFormData({ 
+                                name: item.name, 
+                                designation: item.designation, 
+                                bio: item.bio || "", 
+                                status: item.status, 
+                                imageFile: null 
+                            }); 
                             setShowEditModal(true); 
                         }}><EditIcon /></button>
                         <button className="icon-btn delete-btn" onClick={() => { setSelectedItem(item); setShowDeleteModal(true); }}><DeleteIcon /></button>

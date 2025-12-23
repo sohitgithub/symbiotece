@@ -1,80 +1,58 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-
-// --- Magic Image Function ---
-const getImageUrl = (url) => {
-  if (!url) return '';
-  if (url.includes('drive.google.com')) {
-    const idMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-    if (idMatch && idMatch[1]) {
-      return `https://lh3.googleusercontent.com/d/${idMatch[1]}`;
-    }
-  }
-  return url;
-};
 
 export default function MemberPage() {
   const { slug } = useParams();
+  
+  // State
+  const [member, setMember] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
-  // Data
-  const members = {
-    "anil-satwani": {
-      name: "Mr Anil Satwani",
-      role: "Chairman and Managing Director",
-      img: "/images/boardimages/board-anil-satwani.png",
-      bio: `Anil Satwani is the Chairman and Managing Director on the Board of our Company.
-            He has been associated with our Company since its incorporation. He holds a bachelor’s
-            degree in science from Holkar Science College, Devi Ahilya Vishwavidyalaya, Indore, a 
-            master’s of arts degree in economics from Indore Christian College, Devi Ahilya Vishwavidyalaya, 
-            Indore and a master’s degree in business administration from the Institute of Management Studies, Devi Ahilya Vishwavidyalaya, Indore. He has approximately 30 years of experience in the pharmaceutical sector. In our Company, he is responsible for the overall management related to quality, production and finance.`,
-    },
-    "hariharnath-buggana": {
-      name: "Mr Hariharnath Buggana",
-      role: "Nominee Director",
-      img: "https://drive.google.com/file/d/1ZZz24_v2cOu326IDPJSdcazuUbR3rl8y/view?usp=drive_link",
-      bio: `Hariharnath Buggana is a Nominee Director on the Board of our Company. 
-            He holds a bachelor’s degree in engineering (chemical) from the Pravara 
-            Education Society’s College of Engineering, Loni (Ahmednagar), University 
-            of Poona, a master’s of science degree in chemical engineering from the College 
-            of Engineering and Science, Illinois Institute of Technology and a master’s degree 
-            in management from the J. L. Kellogg Graduate School of Management, Northwestern University.`,
-    },
-    "sunita-kishnani": {
-      name: "Mrs Sunita Kishnani",
-      role: "Independent Director",
-      img: "/images/boardimages/board-Sunita-Kishnani.png",
-      bio: `Sunita Kishnani is an Independent Director on the Board of our Company. 
-            She holds a bachelor’s degree in commerce from Devi Ahilya Vishwavidyalaya, 
-            Indore. She has approximately 30 years of experience in the marketing sector.`,
-    },
-    "pratik-patel": {
-      name: "Mr Pratik Patel",
-      role: "Independent Director",
-      img: "/images/boardimages/board-pratik.png",
-      bio: `Mr. Pratik Patel is the Managing Director of Jash Engineering Limited, a publicly listed company.
-            He holds a Bachelor's degree in Production Engineering from Sardar Patel University and an MBA in Finance from Devi Ahilya Vishwavidyalaya, Indore.`,
-    },
-    "rohit-mantri": {
-      name: "Mr Rohit Mantri",
-      role: "Independent Director",
-      img: "/images/boardimages/board-rohit.png",
-      bio: `Rohit leads the life sciences and healthcare investments at Motilal Oswal Private Equity (MOPE). He has over 15 years of experience in the life sciences sector in private equity and investment banking. Before joining MOPE in 2015, Rohit worked as an Associate Director at KPMG in the investment banking business, responsible for origination and execution of M&A, private equity, financial restructuring and joint venture transactions. Rohit is also a member of the Institute of Chartered Accountants of India (all-India rank holder) and a qualified Company Secretary.`,
-    },
-    "richard-kenny": {
-      name: "Mr Richard P F Kenny",
-      role: "Independent Director",
-      img: "/images/boardimages/board-richard-kenny.png",
-      bio: `Richard Patrick Findlay Kenny is an Independent Director on the Board of our Company. 
-            He is the Founder and Managing Partner of Hawkwood Biotech, the largest consulting practice dedicated to industrial biotechnology.`,
-    },
+  // --- Fetch Data on Mount ---
+  useEffect(() => {
+    const fetchMember = async () => {
+      try {
+        setLoading(true);
+        // Backend call matching the new route
+        const res = await fetch(`${baseUrl}/api/board-members/public/${slug}`);
+        
+        if (!res.ok) {
+            throw new Error("Member not found");
+        }
+        
+        const data = await res.json();
+        setMember(data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching member:", err);
+        setError(true);
+        setLoading(false);
+      }
+    };
+
+    if (slug) {
+        fetchMember();
+    }
+  }, [slug, baseUrl]);
+
+  // --- Image Helper ---
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return "https://via.placeholder.com/400x500?text=No+Image";
+    // Check if it's a full URL (like Google Drive) or a local upload
+    if (imagePath.startsWith('http')) return imagePath;
+    return `${baseUrl}/uploads/${imagePath}`;
   };
 
-  const member = members[slug];
-  if (!member) return <div style={{ padding: "50px", textAlign: "center" }}>Member not found</div>;
+  // --- Loading / Error States ---
+  if (loading) return <div style={{ padding: "100px", textAlign: "center", fontSize: "20px" }}>Loading Profile...</div>;
+  if (error || !member) return <div style={{ padding: "100px", textAlign: "center", fontSize: "20px", color: "red" }}>Member not found in database.</div>;
 
   return (
     <div className="page-container">
-      {/* --- INLINE CSS FOR EXACT SCREENSHOT MATCH --- */}
+      {/* --- INLINE CSS --- */}
       <style>{`
         .page-container {
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -84,78 +62,62 @@ export default function MemberPage() {
           padding: 160px 20px;
         }
 
-        /* Top Layout: Text Left, Image Right */
         .profile-section {
           display: flex;
           justify-content: space-between;
-          align-items: flex-start; /* Aligns items to top */
+          align-items: flex-start;
           gap: 60px;
           margin-bottom: 80px;
         }
 
         .text-content {
-          flex: 1; /* Takes remaining space */
+          flex: 1;
           padding-top: 10px;
         }
 
-        /* Typography */
         .member-name {
           font-size: 42px;
-          font-weight: 800; /* Extra Bold */
-          color: #111827; /* Dark Black/Grey */
+          font-weight: 800;
+          color: #111827;
           margin: 0 0 10px 0;
           letter-spacing: -0.5px;
         }
 
         .member-role {
           font-size: 20px;
-          color: #6b7280; /* Medium Grey */
+          color: #6b7280;
           margin: 0 0 30px 0;
           font-weight: 400;
         }
 
         .member-bio {
-  font-size: 16px;
-  line-height: 1.8;
-  color: #4b5563;
+          font-size: 16px;
+          line-height: 1.8;
+          color: #4b5563;
+          white-space: pre-line;     
+          text-align: justify;      
+          text-justify: inter-word;  
+        }
 
-  white-space: pre-line;     
-  text-align: justify;      
-  text-justify: inter-word;  
-}
-
-
-        /* Image Styling */
         .image-wrapper {
-          flex: 0 0 400px; /* Fixed width for image column */
+          flex: 0 0 400px;
           display: flex;
           justify-content: center;
         }
 
         .member-img {
           width: 80%;
-          height:400px;
+          height: 400px;
           border-radius: 8px;
-          /* Optional: slight shadow if image is transparent */
-          /* box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); */
+          object-fit: cover;
+          object-position: top center;
+          background-color: #f3f4f6;
+          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
-        /* Bottom Section: Certifications */
-        .bottom-section {
-          text-align: center;
-          margin-top: 60px;
-        }
-
-        .cert-heading {
-          font-size: 36px;
-          font-weight: 900;
-          color: #000;
-        }
-
-        /* Mobile Responsiveness */
         @media (max-width: 900px) {
           .profile-section {
-            flex-direction: column-reverse; /* Image on top for mobile, or remove reverse for image bottom */
+            flex-direction: column-reverse;
             align-items: center;
             gap: 40px;
           }
@@ -171,17 +133,24 @@ export default function MemberPage() {
         {/* Left Side: Text */}
         <div className="text-content">
           <h1 className="member-name">{member.name}</h1>
-          <h2 className="member-role">{member.role}</h2>
-          <p className="member-bio">{member.bio}</p>
+          <h2 className="member-role">{member.designation}</h2>
+          {/* Default text if bio is missing */}
+          <p className="member-bio">
+            {member.bio || "Biography details not available yet."}
+          </p>
         </div>
 
         {/* Right Side: Image */}
         <div className="image-wrapper">
           <img 
-            src={getImageUrl(member.img)} 
+            src={getImageUrl(member.image_path)} 
             alt={member.name} 
             className="member-img"
             referrerPolicy="no-referrer"
+            onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "https://via.placeholder.com/400x500?text=No+Image";
+            }}
           />
         </div>
       
