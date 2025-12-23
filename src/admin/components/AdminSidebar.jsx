@@ -7,14 +7,14 @@ import {
   ChevronRight,
   FileText,
   Users,
-  Settings,
   LogOut,
 } from "lucide-react";
 import "./AdminSidebar.css";
 
 function SidebarItem({ to, icon: Icon, label, collapsed }) {
   const location = useLocation();
-  const active = location.pathname === to;
+  // Improved Active Logic: Highlight if path matches OR starts with path (for sub-pages)
+  const active = location.pathname === to || location.pathname.startsWith(to + "/");
 
   return (
     <Link
@@ -49,7 +49,7 @@ export default function AdminSidebar({ collapsed }) {
       >
         <div className="toggle-left">
           <BarChart3 size={18} />
-          {!collapsed && <span>Performance</span>}
+          {!collapsed && <span>Financial Results</span>}
         </div>
         {!collapsed && (
           <ChevronRight
@@ -60,10 +60,27 @@ export default function AdminSidebar({ collapsed }) {
 
       {openPerformance && !collapsed && (
         <div className="sidebar-sub">
-          <SidebarItem to="/admin/performance/quarterly" icon={FileText} label="Quarterly Results" />
-          <SidebarItem to="/admin/performance/annual/company" icon={FileText} label="Annual – Company" />
-          <SidebarItem to="/admin/performance/annual/subsidiaries" icon={FileText} label="Annual – Subsidiaries" />
-          <SidebarItem to="/admin/performance/annual/group" icon={FileText} label="Annual – Group" />
+          {/* Paths match App.js Routes */}
+          <SidebarItem 
+            to="/admin/performance/quarterly" 
+            icon={FileText} 
+            label="Quarterly Results" 
+          />
+          <SidebarItem 
+            to="/admin/performance/annual/company" 
+            icon={FileText} 
+            label="Annual – Company" 
+          />
+          <SidebarItem 
+            to="/admin/performance/annual/subsidiaries" 
+            icon={FileText} 
+            label="Annual – Subsidiaries" 
+          />
+          <SidebarItem 
+            to="/admin/performance/annual/group" 
+            icon={FileText} 
+            label="Annual – Group" 
+          />
         </div>
       )}
 
@@ -138,7 +155,6 @@ export default function AdminSidebar({ collapsed }) {
           />
         </div>
       )}
-
 
       <div className="sidebar-divider" />
 

@@ -3,7 +3,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
-/* PUBLIC PAGES */
+/* ================= PUBLIC PAGES ================= */
 import Home from "./pages/Home";
 import Performance from "./pages/Performance";
 import Announcements from "./pages/Announcements";
@@ -15,13 +15,32 @@ import TermsConditions from "./pages/TermsConditions";
 import HelpCentre from "./pages/HelpCentre";
 import InvestorRelations from "./pages/InvestorRelations";
 import MemberPage from "./pages/boardMembers/MemberPage";
+
+/* ================= ADMIN AUTH & LAYOUT ================= */
 import AdminLogin from "./admin/pages/Login";
 import Dashboard from "./admin/pages/Dashboard";
-import SectionPage from "./admin/pages/SectionPage";
 import AdminLayout from "./admin/AdminLayout";
 import ProtectedRoute from "./admin/components/ProtectedRoute";
 
+/* ================= ADMIN PAGES (PERFORMANCE) ================= */
+// ✅ FIXED: Spelling correct kar di hai (QuarterlyResults)
+import QuarterlyResults from "./admin/pages/performance/QuarterlyResults"; 
+import AnnualCompany from "./admin/pages/performance/AnnualCompany";
+import AnnualSubsidiaries from "./admin/pages/performance/AnnualSubsidiaries";
+import AnnualGroup from "./admin/pages/performance/AnnualGroup";
 
+/* ================= ADMIN PAGES (GOVERNANCE) ================= */
+import BoardMembers from "./admin/pages/governance/BoardMembers";
+import CommitteeComposition from "./admin/pages/governance/CommitteeComposition";
+import Policies from "./admin/pages/governance/Policies";
+import OfferDocuments from "./admin/pages/governance/OfferDocuments";
+import ShareholdingPattern from "./admin/pages/governance/ShareholdingPattern";
+import Disclosures from "./admin/pages/governance/Disclosures";
+import SecretarialCompliance from "./admin/pages/governance/SecretarialCompliance";
+import MaterialCreditors from "./admin/pages/governance/MaterialCreditors";
+import IndustryReport from "./admin/pages/governance/IndustryReport";
+import SchemeArrangements from "./admin/pages/governance/SchemeArrangements";
+import MediaPress from "./admin/pages/governance/MediaPress";
 
 export default function App() {
   const location = useLocation();
@@ -29,12 +48,11 @@ export default function App() {
 
   return (
     <>
-    
       <ScrollToTop />
       {!isAdminRoute && <Navbar />}
 
       <Routes>
-        {/* PUBLIC */}
+        {/* ================= PUBLIC ROUTES ================= */}
         <Route path="/" element={<Home />} />
         <Route path="/performance" element={<Performance />} />
         <Route path="/announcements" element={<Announcements />} />
@@ -47,11 +65,11 @@ export default function App() {
         <Route path="/investor-relations" element={<InvestorRelations />} />
         <Route path="/board/:slug" element={<MemberPage />} />
 
-        {/* ADMIN LOGIN */}
+        {/* ================= ADMIN LOGIN ================= */}
         <Route path="/admin" element={<AdminLogin />} />
 
-        {/* ADMIN PANEL */}
-         <Route
+        {/* ================= ADMIN PANEL ================= */}
+        <Route
           path="/admin/*"
           element={
             <ProtectedRoute>
@@ -59,133 +77,27 @@ export default function App() {
             </ProtectedRoute>
           }
         >
+          {/* Dashboard */}
           <Route path="dashboard" element={<Dashboard />} />
 
-          <Route
-            path="performance/quarterly"
-            element={
-              <SectionPage
-                sectionKey="quarterly"
-              />
-            }
-          />
+          {/* --- PERFORMANCE SECTION (Updated) --- */}
+          <Route path="performance/quarterly" element={<QuarterlyResults />} />
+          <Route path="performance/annual/company" element={<AnnualCompany />} />
+          <Route path="performance/annual/subsidiaries" element={<AnnualSubsidiaries />} />
+          <Route path="performance/annual/group" element={<AnnualGroup />} />
 
-          <Route
-            path="performance/annual/company"
-            element={
-              <SectionPage
-                sectionKey="annual_company"
-              />
-            }
-          />
-
-          <Route
-            path="performance/annual/subsidiaries"
-            element={
-              <SectionPage
-                sectionKey="annual_subsidiaries"
-              />
-            }
-          />
-
-          <Route
-            path="performance/annual/group"
-            element={
-              <SectionPage
-                sectionKey="annual_group"
-              />
-            }
-          />
-
-          {/* GOVERNANCE */}
-          {/* GOVERNANCE */}
-          <Route
-            path="governance/board"
-            element={
-            <SectionPage 
-            sectionKey="board"
-            />}
-          />
-
-          <Route
-            path="governance/committee-composition"
-            element={
-            <SectionPage
-               sectionKey="committee_composition"
-            />}
-          />
-
-          <Route
-            path="governance/policies"
-            element={
-            <SectionPage
-              sectionKey="policies"
-            />}
-          />
-
-          <Route
-            path="governance/offer-documents"
-            element={
-            <SectionPage 
-            sectionKey="offer_documents"
-            />}
-          />
-
-          <Route
-            path="governance/shareholding-pattern"
-            element={
-            <SectionPage 
-               sectionKey="shareholding_pattern"
-            />}
-          />
-
-          <Route
-            path="governance/disclosures"
-            element={
-            <SectionPage 
-            sectionKey="disclosures"
-            />}
-          />
-
-          <Route
-            path="governance/secretarial-compliance"
-            element={
-            <SectionPage 
-            sectionKey="secretarial_compliance"
-            />}
-          />
-
-          <Route
-            path="governance/material-creditors"
-            element={
-            <SectionPage 
-            sectionKey="material_creditors"
-            />}
-          />
-
-          <Route
-            path="governance/industry-report"
-            element={
-            <SectionPage 
-            sectionKey="industry_report"
-            />}
-          />
-
-          <Route
-            path="governance/scheme-of-arrangements"
-            element={
-            <SectionPage 
-              sectionKey="scheme_of_arrangements"
-            />}
-          />
-
-          <Route
-            path="governance/media-press"
-            element={
-            <SectionPage 
-              sectionKey="media_press"
-            />}
-          />
+          {/* --- GOVERNANCE SECTION --- */}
+          <Route path="governance/board" element={<BoardMembers />} />
+          <Route path="governance/committee-composition" element={<CommitteeComposition />} />
+          <Route path="governance/policies" element={<Policies />} />
+          <Route path="governance/offer-documents" element={<OfferDocuments />} />
+          <Route path="governance/shareholding-pattern" element={<ShareholdingPattern />} />
+          <Route path="governance/disclosures" element={<Disclosures />} />
+          <Route path="governance/secretarial-compliance" element={<SecretarialCompliance />} />
+          <Route path="governance/material-creditors" element={<MaterialCreditors />} />
+          <Route path="governance/industry-report" element={<IndustryReport />} />
+          <Route path="governance/scheme-of-arrangements" element={<SchemeArrangements />} />
+          <Route path="governance/media-press" element={<MediaPress />} />
 
         </Route>
       </Routes>
