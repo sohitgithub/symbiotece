@@ -1,5 +1,5 @@
-import React from "react";
-import "../governanceComponents/GovernanceTabs.css"
+import React, { useState, useEffect } from "react";
+// import "../governanceComponents/GovernanceTabs.css" // Keep if you use it
 
 // --- Icon Component ---
 const DocumentIcon = () => (
@@ -13,19 +13,31 @@ const DocumentIcon = () => (
 );
 
 export default function AnnualCompany() {
-  
-  // ⭐ DATA UPDATED FROM SCREENSHOT 1 ⭐
-  const companyData = {
-    "2024-25": [
-      { title: "Annual Report Symbiotec 2024-25", link: "https://drive.google.com/file/d/1QffZfnEwWKCiKUkzE1G-vVy9KHnct4Yb/view?usp=drive_link" }
-    ],
-    "2023-24": [
-      { title: "Annual Report Symbiotec 2023-24", link: "https://drive.google.com/file/d/1JEzh5ifZwB5H2HQo26vodQ61AiZNlRPW/view?usp=drive_link" }
-    ],
-    "2022-23": [
-      { title: "Annual Report Symbiotec 2022-23", link: "https://drive.google.com/file/d/16xYdjv7BJW-678DXegdYU7RC5KDqmbz4/view?usp=drive_link" }
-    ]
-  };
+  const [groupedData, setGroupedData] = useState({});
+  const [loading, setLoading] = useState(true);
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
+  useEffect(() => {
+    fetch(`${baseUrl}/api/annual-company/public`)
+      .then((res) => res.json())
+      .then((data) => {
+        // Group raw data by Financial Year
+        const grouped = data.reduce((acc, item) => {
+          if (!acc[item.financial_year]) acc[item.financial_year] = [];
+          acc[item.financial_year].push({
+            title: item.document_type,
+            link: item.pdf_path ? `${baseUrl}/uploads/${item.pdf_path}` : "#"
+          });
+          return acc;
+        }, {});
+        setGroupedData(grouped);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, [baseUrl]);
 
   return (
     <div className="annual-wrapper">
@@ -40,18 +52,19 @@ export default function AnnualCompany() {
         .doc-icon-wrapper { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 10px; background-color: #f3f4f6; color: #6b7280; transition: all 0.3s ease; }
         .doc-card:hover .doc-icon-wrapper { background-color: #eff6ff; color: #2563eb; }
         .empty-msg { color: #9ca3af; font-style: italic; }
-
       `}</style>
 
-      {Object.keys(companyData).length === 0 && <p className="empty-msg">No reports available.</p>}
+      {loading && <p>Loading reports...</p>}
 
-      {Object.keys(companyData)
-        .sort((a, b) => b.localeCompare(a)) 
+      {!loading && Object.keys(groupedData).length === 0 && <p className="empty-msg">No reports available.</p>}
+
+      {Object.keys(groupedData)
+        .sort((a, b) => b.localeCompare(a)) // Sort Years Descending
         .map((year) => (
           <div key={year} className="year-section">
             <h2 className="year-title">{year}</h2>
             <div className="doc-grid">
-              {companyData[year].map((doc, index) => (
+              {groupedData[year].map((doc, index) => (
                 <a
                   key={index}
                   href={doc.link}

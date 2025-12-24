@@ -23,8 +23,7 @@ import AdminLayout from "./admin/AdminLayout";
 import ProtectedRoute from "./admin/components/ProtectedRoute";
 
 /* ================= ADMIN PAGES (PERFORMANCE) ================= */
-// ✅ FIXED: Spelling correct kar di hai (QuarterlyResults)
-import QuarterlyResults from "./admin/pages/performance/QuarterlyResults"; 
+import QuarterlyResultsAdmin from "./admin/pages/performance/QuarterlyResultsAdmin"; 
 import AnnualCompany from "./admin/pages/performance/AnnualCompany";
 import AnnualSubsidiaries from "./admin/pages/performance/AnnualSubsidiaries";
 import AnnualGroup from "./admin/pages/performance/AnnualGroup";
@@ -81,7 +80,7 @@ export default function App() {
           <Route path="dashboard" element={<Dashboard />} />
 
           {/* --- PERFORMANCE SECTION (Updated) --- */}
-          <Route path="performance/quarterly" element={<QuarterlyResults />} />
+          <Route path="performance/quarterly" element={<QuarterlyResultsAdmin />} />
           <Route path="performance/annual/company" element={<AnnualCompany />} />
           <Route path="performance/annual/subsidiaries" element={<AnnualSubsidiaries />} />
           <Route path="performance/annual/group" element={<AnnualGroup />} />

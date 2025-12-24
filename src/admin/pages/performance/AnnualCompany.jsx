@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-// Ensure you have this CSS file accessible. 
-// If it is in src/SectionPage.css, use this import:
+// ✅ CSS Import
 import "../SectionPage.css";
+
 // --- ICONS ---
 const ViewIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#40a9ff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>);
 const EditIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>);
@@ -25,34 +25,47 @@ export default function AnnualCompany() {
   const [selectedItem, setSelectedItem] = useState(null);
 
   const initialFormState = {
-    financialYear: "",
-    documentType: "Annual Report", // Default
+    financialYear: "2024-25", // Default
+    documentType: "", // This will be the Title (e.g. "Annual Report Symbiotec...")
     status: "Draft",
     pdfFile: null,
   };
   const [formData, setFormData] = useState(initialFormState);
   const [formError, setFormError] = useState("");
 
-  const fyOptions = ["FY23", "FY24", "FY25"];
-  const docTypeOptions = ["Annual Report", "Financial Statements"];
+  // Years matching your Public Page
+  const fyOptions = ["2024-25", "2023-24", "2022-23", "2021-22"];
   const statusOptions = ["Draft", "Published"];
 
   // --- FETCH DATA ---
   const fetchResults = async () => {
     setIsLoading(true);
     try {
-      // ✅ API Endpoint specific to Annual Company
       let url = `${baseUrl}/api/annual-company`; 
       if (searchQuery) url += `?search=${encodeURIComponent(searchQuery)}`;
 
       const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-      if (res.status === 401) { navigate("/login"); return; }
+
+      if (res.status === 401 || res.status === 403) {
+        localStorage.removeItem("token");
+        navigate("/admin");
+        return;
+      }
+
       const data = await res.json();
-      setResults(data);
-    } catch (err) { console.error(err); } finally { setIsLoading(false); }
+      setResults(Array.isArray(data) ? data : []);
+    } catch (err) { 
+        console.error(err);
+        setResults([]);
+    } finally { 
+        setIsLoading(false); 
+    }
   };
 
-  useEffect(() => { if (token) fetchResults(); }, [token, searchQuery]);
+  useEffect(() => { 
+    if (token) fetchResults(); 
+    else navigate("/admin");
+  }, [token, searchQuery]);
 
   // --- HANDLERS ---
   const handleInputChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -70,7 +83,7 @@ export default function AnnualCompany() {
     setSelectedItem(item);
     setFormData({
         financialYear: item.financial_year,
-        documentType: item.document_type,
+        documentType: item.document_type, // This is the Title
         status: item.status,
         pdfFile: null
     });
@@ -91,7 +104,7 @@ export default function AnnualCompany() {
 
     const dataToSend = new FormData();
     dataToSend.append("financialYear", formData.financialYear);
-    dataToSend.append("documentType", formData.documentType);
+    dataToSend.append("documentType", formData.documentType); // Sending Title
     dataToSend.append("status", formData.status);
     if (formData.pdfFile) dataToSend.append("pdfFile", formData.pdfFile);
 
@@ -104,6 +117,13 @@ export default function AnnualCompany() {
         headers: { Authorization: `Bearer ${token}` },
         body: dataToSend,
       });
+
+      if (res.status === 401 || res.status === 403) {
+        localStorage.removeItem("token");
+        navigate("/admin");
+        return;
+      }
+
       if (!res.ok) throw new Error("Failed to save");
       closeModals(); fetchResults();
     } catch (err) { setFormError("Error saving data."); } finally { setIsLoading(false); }
@@ -117,6 +137,13 @@ export default function AnnualCompany() {
             method: "DELETE",
             headers: { Authorization: `Bearer ${token}` },
         });
+
+        if (res.status === 401 || res.status === 403) {
+            localStorage.removeItem("token");
+            navigate("/admin");
+            return;
+        }
+
         if (!res.ok) throw new Error("Failed");
         closeModals(); fetchResults();
     } catch(err) { alert("Failed to delete."); } finally { setIsLoading(false); }
@@ -126,19 +153,30 @@ export default function AnnualCompany() {
 
   const renderModalForm = (isEdit) => (
     <form className="modal-form" onSubmit={(e) => handleSubmit(e, isEdit)}>
+      
+      {/* 1. Financial Year Dropdown */}
       <div className="form-group">
         <label>Financial Year</label>
         <select name="financialYear" value={formData.financialYear} onChange={handleInputChange} required>
-          <option value="">Select</option>
+          <option value="">Select Year</option>
           {fyOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
         </select>
       </div>
+
+      {/* 2. Document Title (Text Input for full flexibility) */}
       <div className="form-group">
-        <label>Document Type</label>
-        <select name="documentType" value={formData.documentType} onChange={handleInputChange} required>
-          {docTypeOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
-        </select>
+        <label>Document Title</label>
+        <input 
+            type="text" 
+            name="documentType" 
+            value={formData.documentType} 
+            onChange={handleInputChange} 
+            required 
+            placeholder="e.g. Annual Report Symbiotec 2024-25" 
+        />
       </div>
+
+      {/* 3. PDF Upload */}
        <div className="form-group">
         <label>Upload PDF {isEdit && <span className="hint">(Optional)</span>}</label>
         <div className="file-input-wrapper">
@@ -146,13 +184,17 @@ export default function AnnualCompany() {
             <span className="file-chosen-text">{formData.pdfFile ? formData.pdfFile.name : "No file chosen"}</span>
         </div>
       </div>
+
+      {/* 4. Status */}
       <div className="form-group">
           <label>Status</label>
           <select name="status" value={formData.status} onChange={handleInputChange}>
              {statusOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
           </select>
       </div>
+
       {formError && <p className="form-error">{formError}</p>}
+      
       <div className="modal-footer">
         <button type="button" className="cancel-btn" onClick={closeModals}>Cancel</button>
         <button type="submit" className="save-btn" disabled={isLoading}>{isLoading ? "Saving..." : "Save"}</button>
@@ -171,28 +213,27 @@ export default function AnnualCompany() {
       </div>
 
       <div className="search-container">
-        <input type="text" className="search-input" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+        <input type="text" className="search-input" placeholder="Search title or year..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
       </div>
 
       <div className="table-container">
         <table className="data-table">
           <thead>
             <tr>
+              <th>Year</th>
               <th>Title</th>
-              <th>Date</th>
               <th>Status</th>
               <th className="actions-cell">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {results.length === 0 ? (
+            {Array.isArray(results) && results.length === 0 ? (
                 <tr><td colSpan="4" style={{textAlign:"center", padding:"20px"}}>{isLoading ? "Loading..." : "No results found."}</td></tr>
             ) : (
-                results.map((item) => (
+                Array.isArray(results) && results.map((item) => (
                 <tr key={item.id}>
-                    {/* Using item.financial_year + type as Title */}
-                    <td className="title-cell">{item.financial_year} - {item.document_type}</td>
-                    <td>{formatDate(item.created_at)}</td>
+                    <td><span className="year-badge">{item.financial_year}</span></td>
+                    <td className="title-cell">{item.document_type}</td>
                     <td><span className={`status-badge ${item.status.toLowerCase()}`}>{item.status}</span></td>
                     <td className="actions-cell">
                         <button className="icon-btnn view-btn" onClick={() => openViewModal(item)}><ViewIcon /></button>
@@ -206,15 +247,15 @@ export default function AnnualCompany() {
         </table>
       </div>
 
-      {showCreateModal && (<div className="modal-overlay"><div className="modal-card"><h2 className="modal-title">New Annual Report</h2>{renderModalForm(false)}</div></div>)}
+      {showCreateModal && (<div className="modal-overlay"><div className="modal-card"><h2 className="modal-title">New Report</h2>{renderModalForm(false)}</div></div>)}
       {showEditModal && (<div className="modal-overlay"><div className="modal-card"><h2 className="modal-title">Edit Report</h2>{renderModalForm(true)}</div></div>)}
-      {/* View & Delete Modals (Same as Quarterly) */}
+      
        {showViewModal && selectedItem && (
         <div className="modal-overlay">
           <div className="modal-card view-modal-card">
              <h2 className="modal-title">Details</h2>
              <div className="view-row"><strong>Year:</strong> <span>{selectedItem.financial_year}</span></div>
-             <div className="view-row"><strong>Type:</strong> <span>{selectedItem.document_type}</span></div>
+             <div className="view-row"><strong>Title:</strong> <span>{selectedItem.document_type}</span></div>
              <div className="view-actions">
                  {selectedItem.pdf_path ? (<a href={`${baseUrl}/uploads/${selectedItem.pdf_path}`} target="_blank" rel="noopener noreferrer" className="download-btn">Open PDF</a>) : (<span className="no-file">No PDF</span>)}
              </div>
@@ -226,7 +267,7 @@ export default function AnnualCompany() {
         <div className="modal-overlay">
           <div className="modal-card delete-modal-card">
              <h2 className="modal-title">Delete Report</h2>
-             <p>Delete <b>{selectedItem.financial_year}</b> record?</p>
+             <p>Delete <b>{selectedItem.document_type}</b>?</p>
              <div className="modal-footer">
                  <button className="cancel-btn" onClick={closeModals}>Cancel</button>
                  <button className="delete-confirm-btn" onClick={handleDeleteConfirm} disabled={isLoading}>{isLoading ? "Deleting..." : "Delete"}</button>

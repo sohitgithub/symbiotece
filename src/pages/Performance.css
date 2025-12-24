@@ -108,6 +108,7 @@
   border-bottom: 1px solid #eee;
   font-size: 15px;
   white-space: nowrap;
+  text-align:start !important;
 }
 
 /* LEFT COLUMN WIDTH (Document Type) */
@@ -137,7 +138,7 @@
   display: inline-block;
   background: #4da3ff;   /* Groww Blue */
   color: white;
-  padding: 6px 14px;
+  padding: 6px 3px !important;
   border-radius: 30px;
   font-size: 14px;
   font-weight: 600;

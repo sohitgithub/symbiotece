@@ -174,7 +174,7 @@ export default function BoardMembers() {
                     <td>{item.designation}</td>
                     <td><span className={`status-badge ${item.status.toLowerCase()}`}>{item.status}</span></td>
                     <td className="actions-cell">
-                        <button className="icon-btn edit-btn" onClick={() => { 
+                        <button className="icon-btnn edit-btn" onClick={() => { 
                             setSelectedItem(item); 
                             // ✅ Populate Bio on Edit
                             setFormData({ 
@@ -186,7 +186,7 @@ export default function BoardMembers() {
                             }); 
                             setShowEditModal(true); 
                         }}><EditIcon /></button>
-                        <button className="icon-btn delete-btn" onClick={() => { setSelectedItem(item); setShowDeleteModal(true); }}><DeleteIcon /></button>
+                        <button className="icon-btnn delete-btn" onClick={() => { setSelectedItem(item); setShowDeleteModal(true); }}><DeleteIcon /></button>
                     </td>
                 </tr>
                 ))

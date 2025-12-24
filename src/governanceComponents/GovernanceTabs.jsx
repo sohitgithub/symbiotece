@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom"; 
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../governanceComponents/CommitteeComposition.css"
 
 // --- Icon Component ---
@@ -13,16 +13,41 @@ const DocumentIcon = () => (
   </svg>
 );
 
+// --- Video Icon ---
+const VideoIcon = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="23 7 16 12 23 17 23 7"></polygon>
+    <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+  </svg>
+);
+
+// --- Link Icon ---
+const LinkIcon = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+);
+
 export default function GovernancePage() {
   const [activeTab, setActiveTab] = useState("Board");
-  const [annualTab, setAnnualTab] = useState("company");
+  const [annualTab, setAnnualTab] = useState("Company");
   
-  // ✅ 1. State for Dynamic Board Members
+  const [subsidiaryStart, setSubsidiaryStart] = useState(0);
+
+  // ✅ STATE
   const [boardMembers, setBoardMembers] = useState([]);
-  
+  const [committeeMembers, setCommitteeMembers] = useState([]);
+  const [policies, setPolicies] = useState([]);
+  const [offerDocuments, setOfferDocuments] = useState([]);
+  const [shareholdingPatterns, setShareholdingPatterns] = useState([]);
+  const [secretarialDocs, setSecretarialDocs] = useState([]);
+  const [materialCreditors, setMaterialCreditors] = useState([]);
+  const [industryReports, setIndustryReports] = useState([]);
+  const [disclosures, setDisclosures] = useState([]);
+
   const location = useLocation();
-  const navigate = useNavigate();
-  const baseUrl = import.meta.env.VITE_API_BASE_URL; // Get Backend URL
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   const tabs = [
     "Board", "Committee Composition", "Policies", "Offer Documents",
@@ -30,127 +55,126 @@ export default function GovernancePage() {
     "Material Creditors", "Industry Report", "Disclosures"
   ];
 
-  const disclosuresData = [
-    { id: 1, title: "Details of Business", link: "https://symbiotec.com/" },
-    { id: 2, title: "Terms & Conditions of Appointment of Independent Director", link: "/public/documents/tcappointment.pdf" },
-    {
-      id: 3,
-      title: "Composition of Committees of Board of Directors",
-      tab: "Committee Composition"
-    }
-  ];
-
-  // ✅ 2. Fetch Board Members from Backend
+  // --- FETCH DATA ---
   useEffect(() => {
-    const fetchBoard = async () => {
-      try {
-        const res = await fetch(`${baseUrl}/api/board-members/public`);
-        if(res.ok) {
-          const data = await res.json();
-          setBoardMembers(data);
-        }
-      } catch (err) {
-        console.error("Failed to fetch board members", err);
-      }
-    };
-    fetchBoard();
+    fetch(`${baseUrl}/api/board-members/public`).then(res => res.json()).then(data => setBoardMembers(data)).catch(err => console.error(err));
+    fetch(`${baseUrl}/api/committees/public`).then(res => res.json()).then(data => setCommitteeMembers(data)).catch(err => console.error(err));
+    fetch(`${baseUrl}/api/policies/public`).then(res => res.json()).then(data => setPolicies(data)).catch(err => console.error(err));
+    fetch(`${baseUrl}/api/offer-documents/public`).then(res => res.json()).then(data => setOfferDocuments(data)).catch(err => console.error(err));
+    fetch(`${baseUrl}/api/shareholding-patterns/public`).then(res => res.json()).then(data => setShareholdingPatterns(data)).catch(err => console.error(err));
+    fetch(`${baseUrl}/api/secretarial-compliance/public`).then(res => res.json()).then(data => setSecretarialDocs(data)).catch(err => console.error(err));
+    fetch(`${baseUrl}/api/material-creditors/public`).then(res => res.json()).then(data => setMaterialCreditors(data)).catch(err => console.error(err));
+    fetch(`${baseUrl}/api/industry-reports/public`).then(res => res.json()).then(data => setIndustryReports(data)).catch(err => console.error(err));
+    fetch(`${baseUrl}/api/disclosures/public`).then(res => res.json()).then(data => setDisclosures(data)).catch(err => console.error(err));
   }, [baseUrl]);
 
-  // --- DOCUMENTS DATA ---
-  const documentData = {
-    "Offer Documents": [
-      { id: 105, title: "Draft Red Herring Prospectus (DRHP)", link: "https://drive.google.com/file/d/1Ev8HhnTPmGOPhOU52dbiun6jSFr7Bt3B/view?usp=sharing" },
-       { id: 106, title: "Symbiotec Audio Visual DRHP-Hindi", link: "https://drive.google.com/file/d/1Ev8HhnTPmGOPhOU52dbiun6jSFr7Bt3B/view?usp=sharing" },
-        { id: 107, title: "Symbiotec Audio Visual DRHP-English", link: "https://drive.google.com/file/d/1Ev8HhnTPmGOPhOU52dbiun6jSFr7Bt3B/view?usp=sharing" },
+  const getMembersByCommittee = (committeeName) => {
+    return committeeMembers.filter(m => m.committee_name === committeeName);
+  }
 
-    ],
-      "Material Creditors": [
-      { id: 108, title: "docit for material creditors", link: "https://drive.google.com/file/d/1AEawXdhFjThS8Xo1197nX9EaI2mujB32/view?usp=drive_link" }
-    ],
-    "Policies": [
-      { id: 201, title: "Policy on Familiarization Programme for Independent Directors", link: "https://drive.google.com/file/d/1HSpEy18kfGn6nOI8iGa5VM7dU3HmewSx/view?usp=sharing" },
-      { id: 202, title: "Policy for Determination of Materiality of Events or Information", link: "https://drive.google.com/file/d/1Hh4ZXQgcTYAh0AwuBXxZ5Yjbqg7C4pUa/view?usp=sharing" },
-      { id: 203, title: "Code of Conduct for Board and Senior Management", link: "https://drive.google.com/file/d/1L0Omaf-AGWlSuSPHzUV2CvDA4vQy3cAn/view?usp=sharing" },
-      { id: 204, title: "Archival Policy", link: "https://drive.google.com/file/d/1PP1AmgVNEtNgtx9zZGdFgaCuUPVe4CU6/view?usp=sharing" },
-      { id: 205, title: "Policy on Vigil Mechanism", link: "https://drive.google.com/file/d/1QLgUwamnjDsL6oahfWPXqZHserbrlaQe/view?usp=sharing" },
-      { id: 206, title: "Policy on Related Party Transactions", link: "https://drive.google.com/file/d/1QjwbLzfUWihRP0_J4oKLmibh0hPupVw9/view?usp=sharing" },
-      { id: 207, title: "Policy for Inquiry in Case of Leak of UPSI", link: "https://drive.google.com/file/d/1WAjDgRy1GgWPP502UGgBOPa-tFz4KxPi/view?usp=sharing" },
-      { id: 208, title: "Code of Conduct for All Members of the Board and Senior Management", link: "https://drive.google.com/file/d/1ZST05QWqfAFbAFEnsy737BdM4lBeFX82/view?usp=sharing" },
-      { id: 209, title: "Policy for Determination of Materiality of Events or Information", link: "https://drive.google.com/file/d/1_59IEwzM89VpnyKGNI0KbJuukxeqvtY9/view?usp=sharing" },
-      { id: 210, title: "Policy on Corporate Social Responsibility", link: "https://drive.google.com/file/d/1a-TIuNdGHm_cA82HcBOzecMI6WA5LleJ/view?usp=sharing" },
-      { id: 211, title: "Policy for Preservation of Documents", link: "https://drive.google.com/file/d/1bEp2J2AlvJP7BiCtx-rhVcXRQZVcxrvy/view?usp=sharing" },
-      { id: 212, title: "Policy for Determination of Material Subsidiary", link: "https://drive.google.com/file/d/1blfaLr5w_qBECjX4EUej-YLH-Oc4fBTx/view?usp=sharing" },
-      { id: 213, title: "Code of Fair Disclosure Practice", link: "https://drive.google.com/file/d/1cRjEw5NelyXzZ58DPiNP5mSoHqtyfBlk/view?usp=sharing" },
-      { id: 214, title: "Plan for Orderly Succession for Appointment of Directors and Senior Management", link: "https://drive.google.com/file/d/1cjeeKi-N7eSLvcF0F3PEDj5eKzrXNuq3/view?usp=sharing" },
-      { id: 216, title: "Risk Assessment, Management and Minimisation Policy", link: "https://drive.google.com/file/d/1o9QfCc_r-vMEx6Tv1uH5X1_F_s0eRyOd/view?usp=sharing" },
-      { id: 217, title: "Policy on Prevention of Sexual Harassment", link: "https://drive.google.com/file/d/1p6ICGEH4QXGU-LfkY27IqaZR-DD3AxIO/view?usp=sharing" },
-      { id: 218, title: "Policy for Determining of Legitimate Purpose of Sharing UPSI", link: "https://drive.google.com/file/d/1fOY_czvWNqT4ODsdLceF7PJfT8e6iiE8/view?usp=sharing" },
-      { id: 219, title: "Policy on Dividend Distribution", link: "https://drive.google.com/file/d/1rAKF4qiwtvYRjHGdGASgw_Jphk87Fs6J/view?usp=sharing" },
-      { id: 220, title: "Policy for Evaluation of Performance of Board of Directors", link: "https://drive.google.com/file/d/1tD3SZJp5zLhd6QJs_a_5R8vNBe-weD3F/view?usp=sharing" },
-      { id: 221, title: "Policy on Diversity of Board of Directors", link: "https://drive.google.com/file/d/1uUcOaIMi28WYPQeYo7Fnr5ttjb5de2ui/view?usp=sharing" },
-    ],
-    "Shareholding Pattern": [
-      { id: 301, title: "Shareholding Pattern - Q1 2024", link: "/public/documents/Shareholding.pdf" },
-      
-    ],
-    "Secretarial & Regulatory Compliance": [
-      { id: 401, title: "Annual Returns - Knovea 2022", link: "https://drive.google.com/file/d/1EtQZmlJY2LTa59V6ql2NMABJneNOk4hj/view?usp=sharing" },
-      { id: 402, title: "Annual Returns - Knovea 2023", link: "https://drive.google.com/file/d/1SrdG_DVHTNpLKhPAtk1hw29tYm0Rbs1j/view?usp=sharing" },
-      { id: 403, title: "Annual Returns - Knovea 2024", link: "https://drive.google.com/file/d/1VFvdmJy0_6xtFEDMs6i3uknwn3x2JXI-/view?usp=sharing" },
-      { id: 404, title: "Annual Returns - Symbiotec 2022", link: "https://drive.google.com/file/d/1XRJXh1zTqXHjjbDQvPGaXej9yeLEFKHk/view?usp=sharing" },
-      { id: 405, title: "Annual Returns - Symbiotec 2023", link: "https://drive.google.com/file/d/1YTIxjIQTQ_y8EfgLJ6EG_LsAianDoTdL/view?usp=sharing" },
-      { id: 406, title: "Annual Returns - Symbiotec 2024", link: "https://drive.google.com/file/d/1Zs2DqrgQRBCOELQ5VykwH-F-fYYhl8J7/view?usp=sharing" },
-      { id: 407, title: "Annual Returns - SZPL 2022", link: "https://drive.google.com/file/d/1d6pk0JjVWFDGgMQXJJ8dMRYmFaRDUtUB/view?usp=sharing" },
-      { id: 408, title: "Annual Returns - SZPL 2023", link: "https://drive.google.com/file/d/1fZoZ-wBQdGl6A4wO9aUIkY8UjqCGJjmb/view?usp=sharing" },
-      { id: 409, title: "Annual Returns - SZPL 2024", link: "https://drive.google.com/file/d/1kZAz-VU4FiEI-Hx4VsGUbUsnGmWo9WIK/view?usp=sharing" },
-    ]
-  };
-
-  const currentDocuments = documentData[activeTab] || [];
-
+  // --- TAB SWITCH LOGIC ---
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const tabFromUrl = params.get("tab");
-
     if (tabFromUrl && tabs.includes(tabFromUrl)) {
       setActiveTab(tabFromUrl);
     }
   }, [location.search]);
 
+
+  // --- SUBSIDIARIES DATA PROCESSING ---
+  const companies = [
+    "Knovea Pharmaceutical Private Limited",
+    "Symbiotec Zenfold Private Limited",
+  ];
+
+  const processSubsidiaryData = () => {
+    const matrix = {};
+    const allYearsSet = new Set();
+    const subDocs = secretarialDocs.filter(doc => doc.category === "Subsidiaries");
+
+    subDocs.forEach(doc => {
+        let year = doc.financial_year;
+        if (!year) {
+             const yearMatch = doc.title.match(/\d{4}-\d{2}/) || doc.title.match(/\d{4}/);
+             year = yearMatch ? yearMatch[0] : "Other";
+        }
+
+        let company = null;
+        const lowerTitle = doc.title.toLowerCase();
+        if (lowerTitle.includes("knovea")) company = companies[0];
+        else if (lowerTitle.includes("zenfold") || lowerTitle.includes("szpl")) company = companies[1];
+
+        if (company) {
+            allYearsSet.add(year);
+            if (!matrix[year]) matrix[year] = {};
+            matrix[year][company] = doc.pdf_path;
+        }
+    });
+
+    const sortedYears = Array.from(allYearsSet).sort().reverse();
+    return { matrix, sortedYears };
+  };
+
+  const { matrix, sortedYears } = processSubsidiaryData();
+  const visibleYears = sortedYears.slice(subsidiaryStart, subsidiaryStart + 3);
+
+
   return (
     <div className="governance-container">
+      {/* Styles */}
       <style>{`
-        /* --- CONTAINER --- */
         .governance-container { padding: 20px; font-family: 'Inter', system-ui, sans-serif; max-width: 1400px; margin: 0 auto; }
-
-        /* --- TABS --- */
         .governance-tabs { display: flex; gap: 30px; border-bottom: 1px solid #e5e7eb; margin-bottom: 30px; overflow-x: auto; scrollbar-width: none; }
         .governance-tabs::-webkit-scrollbar { display: none; }
         .gov-tab { background: none; border: none; font-size: 15px; color: #6b7280; padding: 12px 0; cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.2s; font-weight: 500; }
         .gov-tab:hover { color: #2563eb; }
         .gov-tab.active { color: #2563eb; border-bottom: 2px solid #2563eb; font-weight: 600; }
-
-        /* --- DOC GRID --- */
+        
         .doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
         .doc-card { display: flex; flex-direction: column; justify-content: space-between; height: 180px; padding: 24px; background-color: #fff; border: 1px solid #e5e7eb; border-radius: 12px; text-decoration: none; transition: all 0.3s ease; }
         .doc-card:hover { border-color: #93c5fd; box-shadow: 0 10px 25px rgba(37, 99, 235, 0.1); transform: translateY(-4px); }
         .doc-icon-wrapper { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 10px; background-color: #f3f4f6; color: #6b7280; transition: all 0.3s ease; }
         .doc-card:hover .doc-icon-wrapper { background-color: #eff6ff; color: #2563eb; }
-        
-        /* --- BOARD GRID --- */
         .board-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding-top: 10px; }
-        
-        /* CARD LINK STYLING */
         .board-member-card { display: flex; width:90%; flex-direction: column; background-color: #fff; border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden; transition: all 0.3s ease; text-decoration: none; }
         .board-member-card:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(0,0,0,0.1); border-color: #bfdbfe; }
-        
         .board-img { width: 100%; height:300px; aspect-ratio: 3/4; object-fit: cover; object-position: top center; background-color: #f3f4f6; border-bottom: 1px solid #f0f0f0; }
         .board-info-box { padding: 20px 15px; text-align: center; }
         .board-name { margin: 0 0 8px 0; font-size: 19px; font-weight: 700; color: #111827; transition: color 0.3s ease; }
         .board-member-card:hover .board-name { color: #2563eb; }
         .board-role { margin: 0; font-size: 15px; color: #6b7280; font-weight: 500; line-height: 1.4; }
-        
         .empty-state { padding: 60px; text-align: center; color: #9ca3af; background: #f9fafb; border-radius: 12px; border: 1px dashed #e5e7eb; }
+        
+        .annual-tabs button { padding: 8px 16px; border: 1px solid #e5e7eb; background: #fff; cursor: pointer; margin-right: 10px; border-radius: 30px; transition: all 0.2s; }
+        .annual-tabs button.active { background: #f3f3f3; color: #111827; font-weight: 600; border-color: #d1d5db; }
+
+        .disclosures-wrapper { margin-top: 20px; }
+        .disclosures-heading { font-size: 20px; font-weight: 600; color: #1f2937; margin-bottom: 20px; }
+        .disclosures-table { border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden; }
+        .disclosures-row { display: flex; padding: 20px 20px; border-bottom: 1px solid #e5e7eb; align-items: center; }
+        .disclosures-header { background-color: #f9fafb; font-weight: 600; color: #4b5563; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .col-index { width: 50px; text-align: center; color: #9ca3af; font-weight: 500; }
+        .col-name { flex: 1; font-weight: 500; color: #374151; padding-left: 20px; }
+        .col-link { width: 60px; display: flex; justify-content: center; }
+        .col-link a { transition: color 0.2s; color: #2563eb; }
+        .col-link a:hover { color: #1d4ed8; }
+
+        /* SUBSIDIARIES TABLE */
+        .subsidiary-wrapper { width: 100%; font-family: Inter, sans-serif; margin-top: 20px; }
+        .year-nav { display: flex; align-items: center; justify-content: center; gap: 40px; margin-bottom: 18px; color: #374151; background: #f9fafb; padding: 10px; border-radius: 8px; }
+        .year-btn { border: 1px solid #ddd; background: white; width: 30px; height: 30px; border-radius: 50%; font-size: 18px; cursor: pointer; color: #9ca3af; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .year-btn:hover:not(:disabled) { border-color: #2563eb; color: #2563eb; }
+        .year-btn:disabled { opacity: 0.3; cursor: default; }
+        .year-list { display: flex; gap: 80px; font-size: 15px; font-weight: 600; color: #374151; }
+        .sub-table { width: 100%; border-collapse: collapse; }
+        .sub-table thead th { font-size: 14px; font-weight: 600; color: #6b7280; padding: 14px 10px; text-align: center; background: #f9fafb; border-bottom: 1px solid #e5e7eb; }
+        .sub-table thead th:first-child { padding-left: 20px; }
+        .sub-table tbody tr { border-bottom: 1px solid #e5e7eb; }
+        .sub-table tbody td { padding: 22px 10px; font-size: 14px; color: #374151; text-align: center; }
+        .sub-table td.company { text-align: left; padding-left: 20px; font-weight: 500; color: #111827; width: 40%; }
+        .sub-table .report a { color: #2563eb; text-decoration: none; border-bottom: 1px dotted #9ca3af; font-weight: 500; transition: 0.2s; }
+        .sub-table .report a:hover { color: #111827; border-color: #111827; }
       `}</style>
 
       {/* TABS MENU */}
@@ -169,29 +193,21 @@ export default function GovernancePage() {
       {/* CONTENT AREA */}
       <div className="tab-content-area">
 
+        {/* 1. BOARD TAB */}
         {activeTab === "Board" ? (
           <div className="board-grid">
             {boardMembers.length > 0 ? (
               boardMembers.map((member) => (
-                <Link 
-                  to={`/board/${member.slug}`} 
-                  key={member.id} // Changed from slug to id for better React key practice
-                  className="board-member-card"
-                >
+                <Link to={`/board/${member.slug}`} key={member.id} className="board-member-card">
                   <img
-                    // ✅ 3. Update Image Source to Backend
                     src={member.image_path ? `${baseUrl}/uploads/${member.image_path}` : "https://via.placeholder.com/300x400?text=No+Image"}
                     alt={member.name}
                     className="board-img"
                     referrerPolicy="no-referrer"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = 'https://via.placeholder.com/300x400?text=No+Image';
-                    }}
+                    onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/300x400?text=No+Image'; }}
                   />
                   <div className="board-info-box">
                     <h3 className="board-name">{member.name}</h3>
-                    {/* ✅ 4. Update Field Name (role -> designation) */}
                     <p className="board-role">{member.designation}</p>
                   </div>
                 </Link>
@@ -200,244 +216,182 @@ export default function GovernancePage() {
               <div className="empty-state">Loading Board Members...</div>
             )}
           </div>
-        ) : (
-          activeTab !== "Committee Composition" &&
-          activeTab !== "Secretarial & Regulatory Compliance" &&
-          activeTab !== "Disclosures" &&
-          currentDocuments.length > 0 ? (
-            <div className="doc-grid">
-              {currentDocuments.map((doc) => (
-                <a
-                  key={doc.id}
-                  href={doc.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="doc-card"
-                >
-                  <div className="doc-icon-wrapper">
-                    <DocumentIcon />
-                  </div>
-                  <div className="doc-info">
-                    <p className="doc-title">{doc.title}</p>
-                  </div>
-                </a>
-              ))}
-            </div>
-          ) : ""
-        )}
-      </div>
-
-      {/* DISCLOSURES */}
-      {activeTab === "Disclosures" && (
-        <div className="disclosures-wrapper">
-          <h3 className="disclosures-heading">
-            Disclosures under Regulation 46 of SEBI (LODR) Regulations   
-          </h3>
-          <div className="disclosures-table">
-            <div className="disclosures-row disclosures-header">
-              <div className="col-index"></div>
-              <div className="col-name">Name</div>
-              <div className="col-link">Link</div>
-            </div>
-            {disclosuresData.map((item) => (
-              <div key={item.id} className="disclosures-row">
-                <div className="col-index">{item.id}</div>
-                <div className="col-name">{item.title}</div>
-                <div className="col-link">
-                  {item.tab ? (
-                    <button
-                      onClick={() => {
-                        setActiveTab(item.tab);
-                        window.scrollTo({ top: 0, behavior: "smooth" });
-                      }}
-                      className="disclosure-tab-link"
-                    >
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M14 3h7v7" />
-                        <path d="M10 14L21 3" />
-                        <path d="M21 14v7h-7" />
-                        <path d="M3 10v11h11" />
-                      </svg>
-                    </button>
-                  ) : (
-                    <a href={item.link} rel="noopener noreferrer">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M14 3h7v7" />
-                        <path d="M10 14L21 3" />
-                        <path d="M21 14v7h-7" />
-                        <path d="M3 10v11h11" />
-                      </svg>
-                    </a>
-                  )}
-                </div>
-              </div>
+        ) : activeTab === "Policies" ? (
+          <div className="doc-grid">
+            {policies.map((doc) => (
+              <a key={doc.id} href={`${baseUrl}/uploads/${doc.pdf_path}`} target="_blank" rel="noopener noreferrer" className="doc-card">
+                <div className="doc-icon-wrapper"><DocumentIcon /></div>
+                <div className="doc-info"><p className="doc-title">{doc.title}</p></div>
+              </a>
             ))}
           </div>
-        </div>
-      )}
+        ) : activeTab === "Offer Documents" ? (
+          // ✅ UPDATED OFFER DOCUMENTS SECTION
+          <div className="doc-grid">
+            {offerDocuments.map((doc) => {
+              // Determine Icon Type
+              const isExternal = doc.link && (doc.link.startsWith('http') || doc.link.startsWith('www'));
+              const isFile = doc.pdf_path && !isExternal;
+              
+              let Icon = DocumentIcon;
+              if(isFile) {
+                  const ext = doc.pdf_path.split('.').pop().toLowerCase();
+                  if(['mp4', 'mov', 'webm'].includes(ext)) Icon = VideoIcon;
+              } else if(isExternal) {
+                  Icon = LinkIcon;
+              }
 
-      {/* SECRETARIAL */}
-      {activeTab === "Secretarial & Regulatory Compliance" && (
-        <div className="annual-wrapper">
-          <h3 className="committee-title">Annual Returns</h3>
-          <div className="annual-tabs">
-            <button
-              className={annualTab === "company" ? "active" : ""}
-              onClick={() => setAnnualTab("company")}
-            >
-              Company
-            </button>
-            <button
-              className={annualTab === "subsidiaries" ? "active" : ""}
-              onClick={() => setAnnualTab("subsidiaries")}
-            >
-              Subsidiaries
-            </button>
-          </div><br></br>
-
-          {annualTab === "company" && (
-            <div className="doc-grid">
-              {documentData["Secretarial & Regulatory Compliance"].map((doc) => (
-                <a
-                  key={doc.id}
-                  href={doc.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              return (
+                <a 
+                  key={doc.id} 
+                  href={isFile ? `${baseUrl}/uploads/${doc.pdf_path}` : doc.link} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
                   className="doc-card"
                 >
-                  <div className="doc-icon-wrapper">
-                    <DocumentIcon />
-                  </div>
-                  <div className="doc-info">
-                    <p className="doc-title">{doc.title}</p>
-                  </div>
+                  <div className="doc-icon-wrapper"><Icon /></div>
+                  <div className="doc-info"><p className="doc-title">{doc.title}</p></div>
                 </a>
+              )
+            })}
+          </div>
+        ) : activeTab === "Shareholding Pattern" ? (
+          <div className="doc-grid">
+            {shareholdingPatterns.map((doc) => (
+              <a key={doc.id} href={`${baseUrl}/uploads/${doc.pdf_path}`} target="_blank" rel="noopener noreferrer" className="doc-card">
+                <div className="doc-icon-wrapper"><DocumentIcon /></div>
+                <div className="doc-info"><p className="doc-title">{doc.title}</p></div>
+              </a>
+            ))}
+          </div>
+        ) : activeTab === "Secretarial & Regulatory Compliance" ? (
+          <div className="annual-wrapper">
+            <h3 className="committee-title">Annual Returns</h3>
+            <div className="annual-tabs">
+              <button className={annualTab === "Company" ? "active" : ""} onClick={() => setAnnualTab("Company")}>Company</button>
+              <button className={annualTab === "Subsidiaries" ? "active" : ""} onClick={() => setAnnualTab("Subsidiaries")}>Subsidiaries</button>
+            </div><br></br>
+
+            {annualTab === "Company" ? (
+              <div className="doc-grid">
+                {secretarialDocs.filter(doc => doc.category === "Company").map((doc) => (
+                  <a key={doc.id} href={`${baseUrl}/uploads/${doc.pdf_path}`} target="_blank" rel="noopener noreferrer" className="doc-card">
+                    <div className="doc-icon-wrapper"><DocumentIcon /></div>
+                    <div className="doc-info"><p className="doc-title">{doc.title}</p></div>
+                  </a>
+                ))}
+              </div>
+            ) : (
+              <div className="subsidiary-wrapper">
+                {sortedYears.length > 0 ? (
+                  <>
+                    <div className="year-nav">
+                        <button className="year-btn" disabled={subsidiaryStart === 0} onClick={() => setSubsidiaryStart(s => s - 1)}>‹</button>
+                        <div className="year-list">{visibleYears.map(y => <span key={y}>{y}</span>)}</div>
+                        <button className="year-btn" disabled={subsidiaryStart + 3 >= sortedYears.length} onClick={() => setSubsidiaryStart(s => s + 1)}>›</button>
+                    </div>
+
+                    <table className="sub-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                {visibleYears.map(y => <th key={y}>{y}</th>)}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {companies.map(company => (
+                                <tr key={company}>
+                                    <td className="company">{company}</td>
+                                    {visibleYears.map(year => (
+                                        <td key={year} className="report">
+                                            {matrix[year]?.[company] ? (
+                                                <a href={`${baseUrl}/uploads/${matrix[year][company]}`} target="_blank" rel="noopener noreferrer">Annual report</a>
+                                            ) : (<span className="dash">–</span>)}
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                  </>
+                ) : (
+                  <div className="empty-state"><p>No subsidiary data found.</p></div>
+                )}
+              </div>
+            )}
+          </div>
+        ) : activeTab === "Material Creditors" ? (
+          <div className="doc-grid">
+            {materialCreditors.map((doc) => (
+              <a key={doc.id} href={`${baseUrl}/uploads/${doc.pdf_path}`} target="_blank" rel="noopener noreferrer" className="doc-card">
+                <div className="doc-icon-wrapper"><DocumentIcon /></div>
+                <div className="doc-info"><p className="doc-title">{doc.title}</p></div>
+              </a>
+            ))}
+          </div>
+        ) : activeTab === "Industry Report" ? (
+          <div className="doc-grid">
+            {industryReports.map((doc) => (
+              <a key={doc.id} href={`${baseUrl}/uploads/${doc.pdf_path}`} target="_blank" rel="noopener noreferrer" className="doc-card">
+                <div className="doc-icon-wrapper"><DocumentIcon /></div>
+                <div className="doc-info"><p className="doc-title">{doc.title}</p></div>
+              </a>
+            ))}
+          </div>
+        ) : activeTab === "Disclosures" ? (
+          <div className="disclosures-wrapper">
+            <h3 className="disclosures-heading">Disclosures under Regulation 46 of SEBI (LODR) Regulations</h3>
+            <div className="disclosures-table">
+              <div className="disclosures-row disclosures-header">
+                <div className="col-index">#</div><div className="col-name">Name</div><div className="col-link">Link</div>
+              </div>
+              {disclosures.map((item, index) => (
+                <div key={item.id} className="disclosures-row">
+                  <div className="col-index">{index + 1}</div>
+                  <div className="col-name">{item.title}</div>
+                  <div className="col-link">
+                    <a href={item.is_pdf ? `${baseUrl}/uploads/${item.link}` : item.link} target="_blank" rel="noopener noreferrer">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 3h7v7" /><path d="M10 14L21 3" /><path d="M21 14v7h-7" /><path d="M3 10v11h11" /></svg>
+                    </a>
+                  </div>
+                </div>
               ))}
             </div>
-          )}
-
-          {annualTab === "subsidiaries" && (
-            <div className="empty-state">
-              <p>No subsidiary annual returns available.</p>
-            </div>
-          )}
-        </div>
-      )}
+          </div>
+        ) : null}
+      </div>
 
       {/* COMMITTEE COMPOSITION */}
-      {activeTab === "Committee Composition" && (
+     {activeTab === "Committee Composition" && (
         <div className="committee-wrapper">
-          {/* Audit Committee */}
-          <div className="committee-block">
-            <h3 className="committee-title">Audit Committee</h3>
-            <div className="committee-grid">
-              <div className="committee-member">
-                <p className="member-name">Mrs. Sunita Kishnani </p>
-                <span className="member-role">Chairperson</span>
-              </div>
-              <div className="committee-member">
-                <p className="member-name">Mr. Partik Patel </p>
-                <span className="member-role">Member</span>
-              </div>
-              <div className="committee-member">
-                <p className="member-name">Mr. Anil Satwani </p>
-                <span className="member-role">Member</span>
-              </div>
-            </div>
-          </div>
+          {["Audit Committee", "Nomination and Remuneration Committee", "Stakeholder Relationship Committee", "Risk Management Committee", "Corporate Social Responsibility Committee"].map((committee) => (
+            <div className="committee-block" key={committee}>
+              <h3 className="committee-title">{committee}</h3>
+              
+              {/* Using a Simple Table for Better Layout matching Screenshot */}
+              <table className="sub-table" style={{marginTop:'15px'}}>
+                  <thead>
+                      <tr>
+                          <th>S. No.</th>
+                          <th>Name of Director</th>
+                          <th>Board Designation</th>
+                          <th>Chairperson/Member</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {getMembersByCommittee(committee).map((member, index) => (
+                      <tr key={member.id}>
+                          <td style={{paddingLeft:'20px', fontWeight:'bold'}}>{index + 1}.</td>
+                          <td style={{fontWeight:'600', color:'#111'}}>{member.member_name}</td>
+                          <td style={{color:'#555'}}>{member.designation}</td>
+                          <td style={{fontWeight:'600'}}>{member.role}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+              </table>
 
-          {/* Nomination & Remuneration */}
-          <div className="committee-block">
-            <h3 className="committee-title">Nomination and Remuneration Committee</h3>
-            <div className="committee-grid">
-              <div className="committee-member">
-                <p className="member-name">Mr. Pratik Patel </p>
-                <span className="member-role">Chairperson</span>
-              </div>
-              <div className="committee-member">
-                <p className="member-name">Mrs. Sunita Kishnani </p>
-                <span className="member-role">Member</span>
-              </div>
-              <div className="committee-member">
-                <p className="member-name">Mr. Hariharnath Buggana </p>
-                <span className="member-role">Member</span>
-              </div>
             </div>
-          </div>
-
-          <div className="committee-block">
-            <h3 className="committee-title">Stakeholder Relationship Committee</h3>
-            <div className="committee-grid">
-              <div className="committee-member">
-                <p className="member-name">Mr. Pratik Patel </p>
-                <span className="member-role">Chairperson</span>
-              </div>
-              <div className="committee-member">
-                <p className="member-name">Mrs. Sunita Kishnani </p>
-                <span className="member-role">Member</span>
-              </div>
-              <div className="committee-member">
-                <p className="member-name">Mr. Anil Satwani</p>
-                <span className="member-role">Member</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Risk Management */}
-          <div className="committee-block">
-            <h3 className="committee-title">Risk Management Committee</h3>
-            <div className="committee-grid four-col">
-              <div className="committee-member">
-                <p className="member-name">Mr. Anil Satwani</p>
-                <span className="member-role">Chairperson</span>
-              </div>
-              <div className="committee-member">
-                <p className="member-name">Mrs. Sunita Kishnani</p>
-                <span className="member-role">Member</span>
-              </div>
-              <div className="committee-member">
-                <p className="member-name">Mr. Rohit Mantri</p>
-                <span className="member-role">Member</span>
-              </div>
-              <div className="committee-member">
-                <p className="member-name">Mr. Hariharnath Buggana</p>
-                <span className="member-role">Member</span>
-              </div>
-              <div className="committee-member">
-                <p className="member-name">Mr. Raghavender Ramachandran</p>
-                <span className="member-role">Member</span>
-              </div>
-              <div className="committee-member">
-                <p className="member-name">Mr. Salil Jain</p>
-                <span className="member-role">Member</span>
-              </div>
-            </div>
-          </div>
-
-          {/* CSR */}
-          <div className="committee-block">
-            <h3 className="committee-title">Corporate Social Responsibility Committee</h3>
-            <div className="committee-grid four-col">
-              <div className="committee-member">
-                <p className="member-name">Mr. Anil Satwani </p>
-                <span className="member-role">Chairperson</span>
-              </div>
-              <div className="committee-member">
-                <p className="member-name">Mr. Pratik Patel </p>
-                <span className="member-role">Member</span>
-              </div>
-              <div className="committee-member">
-                <p className="member-name">Mr. Hariharnath Buggana</p>
-                <span className="member-role">Member</span>
-              </div>
-              <div className="committee-member">
-                <p className="member-name">Mr. Rohit Mantr</p>
-                <span className="member-role">Member</span>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       )}
     </div>

@@ -28,34 +28,57 @@ export default function AnnualSubsidiaries() {
   // Form State
   const initialFormState = {
     financialYear: "",
-    documentType: "Subsidiary Report", // Default changed
+    documentType: "Knovea Pharmaceutical Private Limited", // Default to first company
     status: "Draft",
     pdfFile: null,
   };
   const [formData, setFormData] = useState(initialFormState);
   const [formError, setFormError] = useState("");
 
-  const fyOptions = ["FY23", "FY24", "FY25"];
-  // Options specific to Subsidiaries if needed
-  const docTypeOptions = ["Subsidiary Report", "Audited Accounts", "Financial Statements"];
+  const fyOptions = ["2024-25", "2023-24", "2022-23", "2021-22"];
+  // ✅ UPDATED: Document Type is now Company Name to match Database Schema
+  const docTypeOptions = [
+    "Knovea Pharmaceutical Private Limited",
+    "Symbiotec Zenfold Private Limited"
+  ];
   const statusOptions = ["Draft", "Published"];
 
   // --- FETCH DATA ---
   const fetchResults = async () => {
     setIsLoading(true);
     try {
-      // ✅ API Endpoint for Subsidiaries
       let url = `${baseUrl}/api/annual-subsidiaries`; 
       if (searchQuery) url += `?search=${encodeURIComponent(searchQuery)}`;
 
       const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-      if (res.status === 401) { navigate("/login"); return; }
+
+      // ✅ TOKEN CHECK
+      if (res.status === 401 || res.status === 403) {
+        localStorage.removeItem("token");
+        navigate("/admin");
+        return;
+      }
+
+      if (!res.ok) throw new Error("Failed to fetch data");
+
       const data = await res.json();
-      setResults(data);
-    } catch (err) { console.error(err); } finally { setIsLoading(false); }
+      // Safety check for array
+      setResults(Array.isArray(data) ? data : []);
+    } catch (err) { 
+        console.error(err); 
+        setResults([]);
+    } finally { 
+        setIsLoading(false); 
+    }
   };
 
-  useEffect(() => { if (token) fetchResults(); }, [token, searchQuery]);
+  useEffect(() => { 
+    if (token) {
+        fetchResults(); 
+    } else {
+        navigate("/admin");
+    }
+  }, [token, searchQuery]);
 
   // --- HANDLERS ---
   const handleInputChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -99,7 +122,6 @@ export default function AnnualSubsidiaries() {
     dataToSend.append("status", formData.status);
     if (formData.pdfFile) dataToSend.append("pdfFile", formData.pdfFile);
 
-    // ✅ API URL Updated
     const url = isEdit ? `${baseUrl}/api/annual-subsidiaries/${selectedItem.id}` : `${baseUrl}/api/annual-subsidiaries`;
     const method = isEdit ? "PUT" : "POST";
 
@@ -109,6 +131,14 @@ export default function AnnualSubsidiaries() {
         headers: { Authorization: `Bearer ${token}` },
         body: dataToSend,
       });
+
+      // ✅ TOKEN CHECK
+      if (res.status === 401 || res.status === 403) {
+        localStorage.removeItem("token");
+        navigate("/admin");
+        return;
+      }
+
       if (!res.ok) throw new Error("Failed to save");
       closeModals(); fetchResults();
     } catch (err) { setFormError("Error saving data."); } finally { setIsLoading(false); }
@@ -118,11 +148,18 @@ export default function AnnualSubsidiaries() {
     if(!selectedItem) return;
     setIsLoading(true);
     try {
-        // ✅ API URL Updated
         const res = await fetch(`${baseUrl}/api/annual-subsidiaries/${selectedItem.id}`, {
             method: "DELETE",
             headers: { Authorization: `Bearer ${token}` },
         });
+
+        // ✅ TOKEN CHECK
+        if (res.status === 401 || res.status === 403) {
+            localStorage.removeItem("token");
+            navigate("/admin");
+            return;
+        }
+
         if (!res.ok) throw new Error("Failed");
         closeModals(); fetchResults();
     } catch(err) { alert("Failed to delete."); } finally { setIsLoading(false); }
@@ -135,12 +172,12 @@ export default function AnnualSubsidiaries() {
       <div className="form-group">
         <label>Financial Year</label>
         <select name="financialYear" value={formData.financialYear} onChange={handleInputChange} required>
-          <option value="">Select</option>
+          <option value="">Select Year</option>
           {fyOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
         </select>
       </div>
       <div className="form-group">
-        <label>Document Type</label>
+        <label>Company Name</label>
         <select name="documentType" value={formData.documentType} onChange={handleInputChange} required>
           {docTypeOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
         </select>
@@ -191,10 +228,10 @@ export default function AnnualSubsidiaries() {
             </tr>
           </thead>
           <tbody>
-            {results.length === 0 ? (
+            {Array.isArray(results) && results.length === 0 ? (
                 <tr><td colSpan="4" style={{textAlign:"center", padding:"20px"}}>{isLoading ? "Loading..." : "No results found."}</td></tr>
             ) : (
-                results.map((item) => (
+                Array.isArray(results) && results.map((item) => (
                 <tr key={item.id}>
                     <td className="title-cell">{item.financial_year} - {item.document_type}</td>
                     <td>{formatDate(item.created_at)}</td>
@@ -219,7 +256,7 @@ export default function AnnualSubsidiaries() {
           <div className="modal-card view-modal-card">
              <h2 className="modal-title">Details</h2>
              <div className="view-row"><strong>Year:</strong> <span>{selectedItem.financial_year}</span></div>
-             <div className="view-row"><strong>Type:</strong> <span>{selectedItem.document_type}</span></div>
+             <div className="view-row"><strong>Company:</strong> <span>{selectedItem.document_type}</span></div>
              <div className="view-actions">
                  {selectedItem.pdf_path ? (<a href={`${baseUrl}/uploads/${selectedItem.pdf_path}`} target="_blank" rel="noopener noreferrer" className="download-btn">Open PDF</a>) : (<span className="no-file">No PDF</span>)}
              </div>
