@@ -226,20 +226,37 @@ export default function GovernancePage() {
             ))}
           </div>
         ) : activeTab === "Offer Documents" ? (
-          // ✅ UPDATED OFFER DOCUMENTS SECTION
-          <div className="doc-grid">
-            {offerDocuments.map((doc) => {
-              // Determine Icon Type
-              const isExternal = doc.link && (doc.link.startsWith('http') || doc.link.startsWith('www'));
-              const isFile = doc.pdf_path && !isExternal;
-              
-              let Icon = DocumentIcon;
-              if(isFile) {
-                  const ext = doc.pdf_path.split('.').pop().toLowerCase();
-                  if(['mp4', 'mov', 'webm'].includes(ext)) Icon = VideoIcon;
-              } else if(isExternal) {
-                  Icon = LinkIcon;
-              }
+  <div className="doc-grid">
+
+    {/* ✅ STATIC DOCUMENT CARD */}
+    <a
+      href="/documents/drhp.pdf"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="doc-card"
+    >
+      <div className="doc-icon-wrapper">
+        <DocumentIcon />
+      </div>
+      <div className="doc-info">
+        <p className="doc-title">Draft Red Herring Prospectus (DRHP)</p>
+      </div>
+    </a>
+
+    {/* ✅ DYNAMIC DOCUMENTS */}
+    {offerDocuments.map((doc) => {
+      const isExternal =
+        doc.link && (doc.link.startsWith("http") || doc.link.startsWith("www"));
+      const isFile = doc.pdf_path && !isExternal;
+
+      let Icon = DocumentIcon;
+      if (isFile) {
+        const ext = doc.pdf_path.split(".").pop().toLowerCase();
+        if (["mp4", "mov", "webm"].includes(ext)) Icon = VideoIcon;
+      } else if (isExternal) {
+        Icon = LinkIcon;
+      }
+
 
               return (
                 <a 
@@ -252,6 +269,8 @@ export default function GovernancePage() {
                   <div className="doc-icon-wrapper"><Icon /></div>
                   <div className="doc-info"><p className="doc-title">{doc.title}</p></div>
                 </a>
+
+                
               )
             })}
           </div>
