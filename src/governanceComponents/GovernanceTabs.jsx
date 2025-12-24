@@ -225,56 +225,96 @@ export default function GovernancePage() {
               </a>
             ))}
           </div>
-        ) : activeTab === "Offer Documents" ? (
+       ) : activeTab === "Offer Documents" ? (
   <div className="doc-grid">
 
-    {/* ✅ STATIC DOCUMENT CARD */}
+    {/* --- STATIC VIDEO 1 --- */}
     <a
-      href="/documents/drhp.pdf"
+      href="https://www.youtube.com/watch?v=VIDEO_ID_1"
       target="_blank"
       rel="noopener noreferrer"
       className="doc-card"
     >
-      <div className="doc-icon-wrapper">
-        <DocumentIcon />
-      </div>
+      <div className="doc-icon-wrapper"><VideoIcon /></div>
       <div className="doc-info">
-        <p className="doc-title">Draft Red Herring Prospectus (DRHP)</p>
+        <p className="doc-title">Symbiotec Corporate Video</p>
       </div>
     </a>
 
-    {/* ✅ DYNAMIC DOCUMENTS */}
+    {/* --- STATIC VIDEO 2 --- */}
+    <a
+      href="https://www.youtube.com/watch?v=VIDEO_ID_2"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="doc-card"
+    >
+      <div className="doc-icon-wrapper"><VideoIcon /></div>
+      <div className="doc-info">
+        <p className="doc-title">Symbiotec Plant Tour</p>
+      </div>
+    </a>
+
+
+    <a
+  href="/documents/drhp.pdf"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="doc-card"
+>
+  <div className="doc-icon-wrapper">
+    <DocumentIcon />
+  </div>
+  <div className="doc-info">
+    <p className="doc-title">Draft Red Herring Prospectus (DRHP)</p>
+  </div>
+</a>
+
+
+    {/* --- DYNAMIC CONTENT FROM BACKEND --- */}
     {offerDocuments.map((doc) => {
       const isExternal =
         doc.link && (doc.link.startsWith("http") || doc.link.startsWith("www"));
       const isFile = doc.pdf_path && !isExternal;
 
       let Icon = DocumentIcon;
+
       if (isFile) {
         const ext = doc.pdf_path.split(".").pop().toLowerCase();
         if (["mp4", "mov", "webm"].includes(ext)) Icon = VideoIcon;
       } else if (isExternal) {
-        Icon = LinkIcon;
+        if (
+          doc.link.includes("youtube") ||
+          doc.link.includes("youtu.be") ||
+          doc.link.includes("vimeo")
+        ) {
+          Icon = VideoIcon;
+        } else {
+          Icon = LinkIcon;
+        }
       }
 
-
-              return (
-                <a 
-                  key={doc.id} 
-                  href={isFile ? `${baseUrl}/uploads/${doc.pdf_path}` : doc.link} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="doc-card"
-                >
-                  <div className="doc-icon-wrapper"><Icon /></div>
-                  <div className="doc-info"><p className="doc-title">{doc.title}</p></div>
-                </a>
-
-                
-              )
-            })}
+      return (
+        <a
+          key={doc.id}
+          href={
+            isFile
+              ? `${baseUrl}/uploads/${doc.pdf_path}`
+              : doc.link
+          }
+          target="_blank"
+          rel="noopener noreferrer"
+          className="doc-card"
+        >
+          <div className="doc-icon-wrapper"><Icon /></div>
+          <div className="doc-info">
+            <p className="doc-title">{doc.title}</p>
           </div>
-        ) : activeTab === "Shareholding Pattern" ? (
+        </a>
+      );
+    })}
+  </div>
+) : activeTab === "Shareholding Pattern" ? (
+
           <div className="doc-grid">
             {shareholdingPatterns.map((doc) => (
               <a key={doc.id} href={`${baseUrl}/uploads/${doc.pdf_path}`} target="_blank" rel="noopener noreferrer" className="doc-card">
