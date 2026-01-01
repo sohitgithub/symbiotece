@@ -32,7 +32,7 @@ const LinkIcon = () => (
 export default function GovernancePage() {
   const [activeTab, setActiveTab] = useState("Board");
   const [annualTab, setAnnualTab] = useState("Company");
-  
+
   const [subsidiaryStart, setSubsidiaryStart] = useState(0);
 
   // ✅ STATE
@@ -48,6 +48,48 @@ export default function GovernancePage() {
 
   const location = useLocation();
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
+
+  const renderCompanySection = () => {
+    const companyDocs = secretarialDocs.filter(doc => doc.category === "Company");
+
+    // Grouping logic
+    const grouped = companyDocs.reduce((acc, doc) => {
+      const year = doc.financial_year || "Other";
+      if (!acc[year]) acc[year] = [];
+      acc[year].push(doc);
+      return acc;
+    }, {});
+
+    // Sort years descending (2024-25, 2023-24...)
+    const sortedYears = Object.keys(grouped).sort().reverse();
+
+    if (sortedYears.length === 0) {
+      return <div className="empty-state">No company documents found.</div>;
+    }
+
+    return sortedYears.map(year => (
+      <div key={year} className="year-group-container">
+        <h2 className="year-group-title">{year}</h2>
+        <div className="doc-grid">
+          {grouped[year].map((doc) => (
+            <a
+              key={doc.id}
+              href={`${baseUrl}/uploads/${doc.pdf_path}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="doc-card"
+            >
+              <div className="doc-icon-wrapper"><DocumentIcon /></div>
+              <div className="doc-info">
+                <p className="doc-title">{doc.title}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    ));
+  };
 
   const tabs = [
     "Board", "Committee Composition", "Policies", "Offer Documents",
@@ -86,30 +128,40 @@ export default function GovernancePage() {
   const companies = [
     "Knovea Pharmaceutical Private Limited",
     "Symbiotec Zenfold Private Limited",
+    "Navisci Pte. Ltd.",
   ];
 
   const processSubsidiaryData = () => {
     const matrix = {};
     const allYearsSet = new Set();
+
+    // Filter for subsidiaries
     const subDocs = secretarialDocs.filter(doc => doc.category === "Subsidiaries");
 
     subDocs.forEach(doc => {
-        let year = doc.financial_year;
-        if (!year) {
-             const yearMatch = doc.title.match(/\d{4}-\d{2}/) || doc.title.match(/\d{4}/);
-             year = yearMatch ? yearMatch[0] : "Other";
-        }
+      let year = doc.financial_year;
+      if (!year) {
+        const yearMatch = doc.title.match(/\d{4}-\d{2}/) || doc.title.match(/\d{4}/);
+        year = yearMatch ? yearMatch[0] : "Other";
+      }
 
-        let company = null;
-        const lowerTitle = doc.title.toLowerCase();
-        if (lowerTitle.includes("knovea")) company = companies[0];
-        else if (lowerTitle.includes("zenfold") || lowerTitle.includes("szpl")) company = companies[1];
+      let company = null;
+      const lowerTitle = doc.title.toLowerCase();
 
-        if (company) {
-            allYearsSet.add(year);
-            if (!matrix[year]) matrix[year] = {};
-            matrix[year][company] = doc.pdf_path;
-        }
+      // ✅ Logic updated to recognize Navisci
+      if (lowerTitle.includes("knovea")) {
+        company = companies[0];
+      } else if (lowerTitle.includes("zenfold") || lowerTitle.includes("szpl")) {
+        company = companies[1];
+      } else if (lowerTitle.includes("navisci")) {
+        company = companies[2]; // Maps to Navisci row
+      }
+
+      if (company && year) {
+        allYearsSet.add(year);
+        if (!matrix[year]) matrix[year] = {};
+        matrix[year][company] = doc.pdf_path;
+      }
     });
 
     const sortedYears = Array.from(allYearsSet).sort().reverse();
@@ -172,9 +224,47 @@ export default function GovernancePage() {
         .sub-table thead th:first-child { padding-left: 20px; }
         .sub-table tbody tr { border-bottom: 1px solid #e5e7eb; }
         .sub-table tbody td { padding: 22px 10px; font-size: 14px; color: #374151; text-align: center; }
-        .sub-table td.company { text-align: left; padding-left: 20px; font-weight: 500; color: #111827; width: 40%; }
-        .sub-table .report a { color: #2563eb; text-decoration: none; border-bottom: 1px dotted #9ca3af; font-weight: 500; transition: 0.2s; }
+.sub-table td.company {
+  text-align: left;
+  padding-left: 20px;
+  font-weight: 500;
+  color: #111827;
+  width: 35%; /* Reduced slightly from 40% to fit 3 companies better */
+}        .sub-table .report a { color: #2563eb; text-decoration: none; border-bottom: 1px dotted #9ca3af; font-weight: 500; transition: 0.2s; }
         .sub-table .report a:hover { color: #111827; border-color: #111827; }
+
+        .year-group-container {
+  margin-bottom: 40px;
+}
+
+.year-group-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f3f4f6; /* Subtle line under the year */
+}
+
+.company-annual-returns {
+  margin-top: 20px;
+}
+
+.committee-block {
+  margin-bottom: 40px;
+}
+
+.committee-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 10px;
+}
+
+
+
+.committee-wrapper { margin-top: 10px; } .committee-section { margin-bottom: 50px; border-bottom: 1px solid #f0f0f0; padding-bottom: 20px; } .committee-heading { font-size: 18px; font-weight: 700; color: #374151; margin-bottom: 25px; } .committee-grid { display: flex; flex-wrap: wrap; gap: 40px 80px; } .committee-member { min-width: 200px; } .member-name { font-size: 16px; font-weight: 700; color: #111827; margin: 0 0 4px 0; } .member-designation { font-size: 14px; color: #6b7280; margin: 0; font-weight: 400; } .member-role { font-size: 13px; color: #9ca3af; margin: 2px 0 0 0; }
+        
       `}</style>
 
       {/* TABS MENU */}
@@ -225,95 +315,95 @@ export default function GovernancePage() {
               </a>
             ))}
           </div>
-       ) : activeTab === "Offer Documents" ? (
-  <div className="doc-grid">
+        ) : activeTab === "Offer Documents" ? (
+          <div className="doc-grid">
 
-    {/* --- STATIC VIDEO 1 --- */}
-    <a
-      href="https://www.youtube.com/watch?v=VIDEO_ID_1"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="doc-card"
-    >
-      <div className="doc-icon-wrapper"><VideoIcon /></div>
-      <div className="doc-info">
-        <p className="doc-title">Symbiotec Corporate Video</p>
-      </div>
-    </a>
+            {/* --- STATIC VIDEO 1 --- */}
+            <a
+              href="https://www.youtube.com/watch?v=VIDEO_ID_1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="doc-card"
+            >
+              <div className="doc-icon-wrapper"><VideoIcon /></div>
+              <div className="doc-info">
+                <p className="doc-title">Symbiotec Corporate Video</p>
+              </div>
+            </a>
 
-    {/* --- STATIC VIDEO 2 --- */}
-    <a
-      href="https://www.youtube.com/watch?v=VIDEO_ID_2"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="doc-card"
-    >
-      <div className="doc-icon-wrapper"><VideoIcon /></div>
-      <div className="doc-info">
-        <p className="doc-title">Symbiotec Plant Tour</p>
-      </div>
-    </a>
-
-
-    <a
-  href="/documents/drhp.pdf"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="doc-card"
->
-  <div className="doc-icon-wrapper">
-    <DocumentIcon />
-  </div>
-  <div className="doc-info">
-    <p className="doc-title">Draft Red Herring Prospectus (DRHP)</p>
-  </div>
-</a>
+            {/* --- STATIC VIDEO 2 --- */}
+            <a
+              href="https://www.youtube.com/watch?v=VIDEO_ID_2"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="doc-card"
+            >
+              <div className="doc-icon-wrapper"><VideoIcon /></div>
+              <div className="doc-info">
+                <p className="doc-title">Symbiotec Plant Tour</p>
+              </div>
+            </a>
 
 
-    {/* --- DYNAMIC CONTENT FROM BACKEND --- */}
-    {offerDocuments.map((doc) => {
-      const isExternal =
-        doc.link && (doc.link.startsWith("http") || doc.link.startsWith("www"));
-      const isFile = doc.pdf_path && !isExternal;
+            <a
+              href="/documents/drhp.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="doc-card"
+            >
+              <div className="doc-icon-wrapper">
+                <DocumentIcon />
+              </div>
+              <div className="doc-info">
+                <p className="doc-title">Draft Red Herring Prospectus (DRHP)</p>
+              </div>
+            </a>
 
-      let Icon = DocumentIcon;
 
-      if (isFile) {
-        const ext = doc.pdf_path.split(".").pop().toLowerCase();
-        if (["mp4", "mov", "webm"].includes(ext)) Icon = VideoIcon;
-      } else if (isExternal) {
-        if (
-          doc.link.includes("youtube") ||
-          doc.link.includes("youtu.be") ||
-          doc.link.includes("vimeo")
-        ) {
-          Icon = VideoIcon;
-        } else {
-          Icon = LinkIcon;
-        }
-      }
+            {/* --- DYNAMIC CONTENT FROM BACKEND --- */}
+            {offerDocuments.map((doc) => {
+              const isExternal =
+                doc.link && (doc.link.startsWith("http") || doc.link.startsWith("www"));
+              const isFile = doc.pdf_path && !isExternal;
 
-      return (
-        <a
-          key={doc.id}
-          href={
-            isFile
-              ? `${baseUrl}/uploads/${doc.pdf_path}`
-              : doc.link
-          }
-          target="_blank"
-          rel="noopener noreferrer"
-          className="doc-card"
-        >
-          <div className="doc-icon-wrapper"><Icon /></div>
-          <div className="doc-info">
-            <p className="doc-title">{doc.title}</p>
+              let Icon = DocumentIcon;
+
+              if (isFile) {
+                const ext = doc.pdf_path.split(".").pop().toLowerCase();
+                if (["mp4", "mov", "webm"].includes(ext)) Icon = VideoIcon;
+              } else if (isExternal) {
+                if (
+                  doc.link.includes("youtube") ||
+                  doc.link.includes("youtu.be") ||
+                  doc.link.includes("vimeo")
+                ) {
+                  Icon = VideoIcon;
+                } else {
+                  Icon = LinkIcon;
+                }
+              }
+
+              return (
+                <a
+                  key={doc.id}
+                  href={
+                    isFile
+                      ? `${baseUrl}/uploads/${doc.pdf_path}`
+                      : doc.link
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="doc-card"
+                >
+                  <div className="doc-icon-wrapper"><Icon /></div>
+                  <div className="doc-info">
+                    <p className="doc-title">{doc.title}</p>
+                  </div>
+                </a>
+              );
+            })}
           </div>
-        </a>
-      );
-    })}
-  </div>
-) : activeTab === "Shareholding Pattern" ? (
+        ) : activeTab === "Shareholding Pattern" ? (
 
           <div className="doc-grid">
             {shareholdingPatterns.map((doc) => (
@@ -332,45 +422,40 @@ export default function GovernancePage() {
             </div><br></br>
 
             {annualTab === "Company" ? (
-              <div className="doc-grid">
-                {secretarialDocs.filter(doc => doc.category === "Company").map((doc) => (
-                  <a key={doc.id} href={`${baseUrl}/uploads/${doc.pdf_path}`} target="_blank" rel="noopener noreferrer" className="doc-card">
-                    <div className="doc-icon-wrapper"><DocumentIcon /></div>
-                    <div className="doc-info"><p className="doc-title">{doc.title}</p></div>
-                  </a>
-                ))}
+              <div className="company-annual-returns">
+                {renderCompanySection()}
               </div>
             ) : (
               <div className="subsidiary-wrapper">
                 {sortedYears.length > 0 ? (
                   <>
                     <div className="year-nav">
-                        <button className="year-btn" disabled={subsidiaryStart === 0} onClick={() => setSubsidiaryStart(s => s - 1)}>‹</button>
-                        <div className="year-list">{visibleYears.map(y => <span key={y}>{y}</span>)}</div>
-                        <button className="year-btn" disabled={subsidiaryStart + 3 >= sortedYears.length} onClick={() => setSubsidiaryStart(s => s + 1)}>›</button>
+                      <button className="year-btn" disabled={subsidiaryStart === 0} onClick={() => setSubsidiaryStart(s => s - 1)}>‹</button>
+                      <div className="year-list">{visibleYears.map(y => <span key={y}>{y}</span>)}</div>
+                      <button className="year-btn" disabled={subsidiaryStart + 3 >= sortedYears.length} onClick={() => setSubsidiaryStart(s => s + 1)}>›</button>
                     </div>
 
                     <table className="sub-table">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                {visibleYears.map(y => <th key={y}>{y}</th>)}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {companies.map(company => (
-                                <tr key={company}>
-                                    <td className="company">{company}</td>
-                                    {visibleYears.map(year => (
-                                        <td key={year} className="report">
-                                            {matrix[year]?.[company] ? (
-                                                <a href={`${baseUrl}/uploads/${matrix[year][company]}`} target="_blank" rel="noopener noreferrer">Annual report</a>
-                                            ) : (<span className="dash">–</span>)}
-                                        </td>
-                                    ))}
-                                </tr>
+                      <thead>
+                        <tr>
+                          <th></th>
+                          {visibleYears.map(y => <th key={y}>{y}</th>)}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {companies.map(company => (
+                          <tr key={company}>
+                            <td className="company">{company}</td>
+                            {visibleYears.map(year => (
+                              <td key={year} className="report">
+                                {matrix[year]?.[company] ? (
+                                  <a href={`${baseUrl}/uploads/${matrix[year][company]}`} target="_blank" rel="noopener noreferrer">Annual report</a>
+                                ) : (<span className="dash">–</span>)}
+                              </td>
                             ))}
-                        </tbody>
+                          </tr>
+                        ))}
+                      </tbody>
                     </table>
                   </>
                 ) : (
@@ -421,38 +506,40 @@ export default function GovernancePage() {
       </div>
 
       {/* COMMITTEE COMPOSITION */}
-     {activeTab === "Committee Composition" && (
+      {activeTab === "Committee Composition" && (
         <div className="committee-wrapper">
-          {["Audit Committee", "Nomination and Remuneration Committee", "Stakeholder Relationship Committee", "Risk Management Committee", "Corporate Social Responsibility Committee"].map((committee) => (
-            <div className="committee-block" key={committee}>
-              <h3 className="committee-title">{committee}</h3>
-              
-              {/* Using a Simple Table for Better Layout matching Screenshot */}
-              <table className="sub-table" style={{marginTop:'15px'}}>
-                  <thead>
-                      <tr>
-                          <th>S. No.</th>
-                          <th>Name of Director</th>
-                          <th>Board Designation</th>
-                          <th>Chairperson/Member</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                    {getMembersByCommittee(committee).map((member, index) => (
-                      <tr key={member.id}>
-                          <td style={{paddingLeft:'20px', fontWeight:'bold'}}>{index + 1}.</td>
-                          <td style={{fontWeight:'600', color:'#111'}}>{member.member_name}</td>
-                          <td style={{color:'#555'}}>{member.designation}</td>
-                          <td style={{fontWeight:'600'}}>{member.role}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-              </table>
 
-            </div>
-          ))}
+          {[
+            "Audit Committee",
+            "Nomination and Remuneration Committee",
+            "Stakeholder Relationship Committee",
+            "Risk Management Committee",
+            "Corporate Social Responsibility Committee"
+          ].map((committeeName) => {
+            const members = getMembersByCommittee(committeeName);
+
+            if (!members.length) return null;
+
+            return (
+              <div key={committeeName} className="committee-section">
+                <h3 className="committee-heading">{committeeName}</h3>
+
+                <div className="committee-grid">
+                  {members.map((member, index) => (
+                    <div key={member.id || index} className="committee-member">
+                      <p className="member-name">{member.member_name}</p>
+                      <p className="member-designation">{member.designation}</p>
+                      <p className="member-role">{member.role}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+
         </div>
       )}
+
     </div>
   );
 }

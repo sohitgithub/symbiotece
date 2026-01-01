@@ -37,9 +37,14 @@ export default function Footer() {
             <p className="footer-desc"><span className="footer-text">Steroids – Hormones</span> Fermentation APIs & CDMO</p>
 
             <div className="footer-socials">
-              <FaLinkedin className="footer-social-icon" />
-              <FaTwitter className="footer-social-icon" />
-            </div>
+<a 
+  href="https://www.linkedin.com/company/symbiotec-pharmalab-pvt-ltd-/" 
+  target="_blank" 
+  rel="noopener noreferrer"
+  className="footer-social-link"
+>
+  <FaLinkedin className="footer-social-icon" />
+</a>            </div>
           </div>
 
           <div className="footer-col">

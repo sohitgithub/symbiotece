@@ -143,16 +143,16 @@ export default function AdminSidebar({ collapsed }) {
             icon={FileText}
             label="Industry Report"
           />
-          <SidebarItem
+          {/* <SidebarItem
             to="/admin/governance/scheme-of-arrangements"
             icon={FileText}
             label="Scheme of Arrangements"
-          />
-          <SidebarItem
+          /> */}
+          {/* <SidebarItem
             to="/admin/governance/media-press"
             icon={FileText}
             label="Media & Press"
-          />
+          /> */}
         </div>
       )}
 

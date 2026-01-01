@@ -5,17 +5,17 @@ export default function AnnualSubsidiaries() {
   const [allYears, setAllYears] = useState([]);
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
-  // Companies List (Fixed to match UI requirement)
+  // ✅ UPDATED: Companies List (Added Navisci)
   const companies = [
     "Knovea Pharmaceutical Private Limited",
     "Symbiotec Zenfold Private Limited",
+    "Navisci Pte. Ltd."
   ];
 
   useEffect(() => {
     fetch(`${baseUrl}/api/annual-subsidiaries/public`)
       .then((res) => res.json())
       .then((apiData) => {
-        // Transform Flat Data to: { "2024-25": { "Knovea...": "link", "Symbiotec...": "link" } }
         const transformed = {};
         const yearsSet = new Set();
 
@@ -23,7 +23,6 @@ export default function AnnualSubsidiaries() {
           yearsSet.add(item.financial_year);
           if (!transformed[item.financial_year]) transformed[item.financial_year] = {};
           
-          // Use document_type as Company Name
           transformed[item.financial_year][item.document_type] = item.pdf_path 
             ? `${baseUrl}/uploads/${item.pdf_path}` 
             : null;
@@ -35,7 +34,6 @@ export default function AnnualSubsidiaries() {
       .catch((err) => console.error(err));
   }, [baseUrl]);
 
-  // Pagination Logic
   const [start, setStart] = useState(0);
   const visibleYears = allYears.slice(start, start + 3);
 
@@ -55,11 +53,9 @@ export default function AnnualSubsidiaries() {
         .company { line-height: 1.6; }
         .report { text-align: center; }
         .report a { color: #374151; text-decoration: none; border-bottom: 1px dotted #9ca3af; font-weight: 500; }
-        .report a:hover { color: #111827; border-color: #111827; }
         .dash { color: #cbd5e1; font-size: 16px; }
       `}</style>
 
-      {/* ===== YEAR NAVIGATION ===== */}
       <div className="year-nav">
         <button className="year-btn" disabled={start === 0} onClick={() => setStart(s => s - 1)}>‹</button>
         <div className="year-list">
@@ -68,7 +64,6 @@ export default function AnnualSubsidiaries() {
         <button className="year-btn" disabled={start + 3 >= allYears.length} onClick={() => setStart(s => s + 1)}>›</button>
       </div>
 
-      {/* ===== TABLE ===== */}
       <table>
         <thead>
           <tr>

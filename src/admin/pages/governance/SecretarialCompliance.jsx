@@ -25,9 +25,10 @@ export default function SecretarialCompliance() {
   const [formData, setFormData] = useState(initialFormState);
 
   // Predefined Companies for Subsidiaries
-  const subsidiaryOptions = [
+const subsidiaryOptions = [
     "Knovea Pharmaceutical Private Limited",
-    "Symbiotec Zenfold Private Limited"
+    "Symbiotec Zenfold Private Limited",
+    "Navisci Pte. Ltd."
   ];
 
   const fyOptions = ["2024-25", "2023-24", "2022-23", "2021-22"];
@@ -71,19 +72,17 @@ export default function SecretarialCompliance() {
   };
 
   const handleSubmit = async (e, isEdit = false) => {
-    e.preventDefault();
-    setIsLoading(true);
+  e.preventDefault();
+  setIsLoading(true);
 
-    const dataToSend = new FormData();
-    dataToSend.append("title", formData.title);
-    dataToSend.append("category", formData.category);
-    
-    // Only send financial year if category is subsidiaries
-    if(formData.category === 'Subsidiaries') {
-        dataToSend.append("financialYear", formData.financialYear);
-    }
+  const dataToSend = new FormData();
+  dataToSend.append("title", formData.title);
+  dataToSend.append("category", formData.category);
+  
+  // ✅ Send financial year for both so the frontend grouping works
+  dataToSend.append("financialYear", formData.financialYear);
 
-    if (formData.pdfFile) dataToSend.append("pdfFile", formData.pdfFile);
+  if (formData.pdfFile) dataToSend.append("pdfFile", formData.pdfFile);
 
     const url = isEdit ? `${baseUrl}/api/secretarial-compliance/${selectedItem.id}` : `${baseUrl}/api/secretarial-compliance`;
     const method = isEdit ? "PUT" : "POST";
@@ -153,7 +152,6 @@ export default function SecretarialCompliance() {
       </div>
 
       {/* 3. Financial Year (ONLY FOR SUBSIDIARIES) */}
-      {formData.category === 'Subsidiaries' && (
           <div className="form-group">
             <label>Financial Year</label>
             <select name="financialYear" value={formData.financialYear} onChange={handleInputChange} required>
@@ -161,7 +159,6 @@ export default function SecretarialCompliance() {
                 {fyOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
             </select>
           </div>
-      )}
 
       {/* 4. File Upload */}
        <div className="form-group">

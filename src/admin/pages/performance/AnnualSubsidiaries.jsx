@@ -37,9 +37,10 @@ export default function AnnualSubsidiaries() {
 
   const fyOptions = ["2024-25", "2023-24", "2022-23", "2021-22"];
   // ✅ UPDATED: Document Type is now Company Name to match Database Schema
-  const docTypeOptions = [
+const docTypeOptions = [
     "Knovea Pharmaceutical Private Limited",
-    "Symbiotec Zenfold Private Limited"
+    "Symbiotec Zenfold Private Limited",
+    "Navisci Pte. Ltd."
   ];
   const statusOptions = ["Draft", "Published"];
 
