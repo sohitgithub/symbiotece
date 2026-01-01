@@ -230,7 +230,7 @@ export default function GovernancePage() {
   font-weight: 500;
   color: #111827;
   width: 35%; /* Reduced slightly from 40% to fit 3 companies better */
-}        .sub-table .report a { color: #2563eb; text-decoration: none; border-bottom: 1px dotted #9ca3af; font-weight: 500; transition: 0.2s; }
+}        .sub-table .report a { color: #19191aff; text-decoration: none; border-bottom: 1px dotted #9ca3af; font-weight: 500; transition: 0.2s; }
         .sub-table .report a:hover { color: #111827; border-color: #111827; }
 
         .year-group-container {
@@ -318,34 +318,8 @@ export default function GovernancePage() {
         ) : activeTab === "Offer Documents" ? (
           <div className="doc-grid">
 
-            {/* --- STATIC VIDEO 1 --- */}
-            <a
-              href="https://www.youtube.com/watch?v=VIDEO_ID_1"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="doc-card"
-            >
-              <div className="doc-icon-wrapper"><VideoIcon /></div>
-              <div className="doc-info">
-                <p className="doc-title">Symbiotec Corporate Video</p>
-              </div>
-            </a>
-
-            {/* --- STATIC VIDEO 2 --- */}
-            <a
-              href="https://www.youtube.com/watch?v=VIDEO_ID_2"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="doc-card"
-            >
-              <div className="doc-icon-wrapper"><VideoIcon /></div>
-              <div className="doc-info">
-                <p className="doc-title">Symbiotec Plant Tour</p>
-              </div>
-            </a>
-
-
-            <a
+         
+            {/* <a
               href="/documents/drhp.pdf"
               target="_blank"
               rel="noopener noreferrer"
@@ -358,6 +332,32 @@ export default function GovernancePage() {
                 <p className="doc-title">Draft Red Herring Prospectus (DRHP)</p>
               </div>
             </a>
+
+
+               <a
+              href="https://www.youtube.com/watch?v=beUCj3b8cWU"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="doc-card"
+            >
+              <div className="doc-icon-wrapper"><VideoIcon /></div>
+              <div className="doc-info">
+                <p className="doc-title">
+Symbiotec Audio Visual DRHP-English</p>
+              </div>
+            </a>
+
+            <a
+              href="https://www.youtube.com/watch?v=PgtNXfkO2yY"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="doc-card"
+            >
+              <div className="doc-icon-wrapper"><VideoIcon /></div>
+              <div className="doc-info">
+                <p className="doc-title">Symbiotec Audio Visual DRHP-Hindi</p>
+              </div>
+            </a> */}
 
 
             {/* --- DYNAMIC CONTENT FROM BACKEND --- */}

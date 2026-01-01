@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+
 
 export default function MemberPage() {
   const { slug } = useParams();
@@ -125,7 +128,26 @@ export default function MemberPage() {
           .member-bio { text-align: left; }
           .image-wrapper { flex: auto; width: 100%; max-width: 350px; }
         }
+
+        .back{
+        margin:20px 0
+        font-weight:500;
+        cursor:pointer;}
+
+        .back a{
+        text-decoration:none;
+        color:black;
+        }
       `}</style>
+
+       <div className="back">
+        <a href="/governance?tab=Board">
+        <FontAwesomeIcon icon={faArrowLeft} />
+        <span>Back</span>
+        </a>
+       </div>
+
+
 
       {/* --- CONTENT --- */}
       <div className="profile-section">
