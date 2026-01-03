@@ -128,7 +128,6 @@ export default function GovernancePage() {
   const companies = [
     "Knovea Pharmaceutical Private Limited",
     "Symbiotec Zenfold Private Limited",
-    "Navisci Pte. Ltd.",
   ];
 
   const processSubsidiaryData = () => {
@@ -153,9 +152,7 @@ export default function GovernancePage() {
         company = companies[0];
       } else if (lowerTitle.includes("zenfold") || lowerTitle.includes("szpl")) {
         company = companies[1];
-      } else if (lowerTitle.includes("navisci")) {
-        company = companies[2]; // Maps to Navisci row
-      }
+      } 
 
       if (company && year) {
         allYearsSet.add(year);
@@ -449,7 +446,7 @@ Symbiotec Audio Visual DRHP-English</p>
                             {visibleYears.map(year => (
                               <td key={year} className="report">
                                 {matrix[year]?.[company] ? (
-                                  <a href={`${baseUrl}/uploads/${matrix[year][company]}`} target="_blank" rel="noopener noreferrer">Annual report</a>
+                                  <a href={`${baseUrl}/uploads/${matrix[year][company]}`} target="_blank" rel="noopener noreferrer">Annual returns</a>
                                 ) : (<span className="dash">–</span>)}
                               </td>
                             ))}

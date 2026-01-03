@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 
 export default function MemberPage() {
@@ -129,23 +131,39 @@ export default function MemberPage() {
           .image-wrapper { flex: auto; width: 100%; max-width: 350px; }
         }
 
-        .back{
-        margin:20px 0
-        font-weight:500;
-        cursor:pointer;}
+    .back {
+  margin-bottom: 20px;
+}
 
-        .back a{
-        text-decoration:none;
-        color:black;
-        }
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #1a1a1a;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.back-btn svg {
+  font-size: 17px;
+}
+
+.back-btn:hover {
+  color: #2783ac;
+}
+
       `}</style>
 
        <div className="back">
-        <a href="/governance?tab=Board">
-        <FontAwesomeIcon icon={faArrowLeft} />
+      <button onClick={() => navigate(-1)} className="back-btn">
+        <FontAwesomeIcon icon={faChevronLeft} />
         <span>Back</span>
-        </a>
-       </div>
+      </button>
+    </div>
 
 
 

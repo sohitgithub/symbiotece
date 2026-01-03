@@ -27,9 +27,8 @@ export default function SecretarialCompliance() {
   // Predefined Companies for Subsidiaries
 const subsidiaryOptions = [
     "Knovea Pharmaceutical Private Limited",
-    "Symbiotec Zenfold Private Limited",
-    "Navisci Pte. Ltd."
-  ];
+    "Symbiotec Zenfold Private Limited"
+    ];
 
   const fyOptions = ["2024-25", "2023-24", "2022-23", "2021-22"];
 
