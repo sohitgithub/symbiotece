@@ -259,6 +259,10 @@ export default function GovernancePage() {
 }
 
 
+.col-link svg{
+color:#2563eb
+}
+
 
 .committee-wrapper { margin-top: 10px; } .committee-section { margin-bottom: 50px; border-bottom: 1px solid #f0f0f0; padding-bottom: 20px; } .committee-heading { font-size: 18px; font-weight: 700; color: #374151; margin-bottom: 25px; } .committee-grid { display: flex; flex-wrap: wrap; gap: 40px 80px; } .committee-member { min-width: 200px; } .member-name { font-size: 16px; font-weight: 700; color: #111827; margin: 0 0 4px 0; } .member-designation { font-size: 14px; color: #6b7280; margin: 0; font-weight: 400; } .member-role { font-size: 13px; color: #9ca3af; margin: 2px 0 0 0; }
         
@@ -486,9 +490,37 @@ Symbiotec Audio Visual DRHP-English</p>
               <div className="disclosures-row disclosures-header">
                 <div className="col-index">#</div><div className="col-name">Name</div><div className="col-link">Link</div>
               </div>
+
+         <div
+        className="disclosures-row disclosures-static-row"
+        onClick={() => setActiveTab("Committee Composition")}
+        style={{ cursor: "pointer" }}
+      >
+        <div className="col-index">1</div>
+        <div className="col-name">
+          Composition of Committees of Board of Directors
+        </div>
+        <div className="col-link">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M14 3h7v7" />
+            <path d="M10 14L21 3" />
+            <path d="M21 14v7h-7" />
+            <path d="M3 10v11h11" />
+          </svg>
+        </div>
+      </div>
               {disclosures.map((item, index) => (
                 <div key={item.id} className="disclosures-row">
-                  <div className="col-index">{index + 1}</div>
+                  <div className="col-index">{index + 2}</div>
                   <div className="col-name">{item.title}</div>
                   <div className="col-link">
                     <a href={item.is_pdf ? `${baseUrl}/uploads/${item.link}` : item.link} target="_blank" rel="noopener noreferrer">

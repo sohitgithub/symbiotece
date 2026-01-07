@@ -10,7 +10,7 @@ import Announcements from "./pages/Announcements";
 import Governance from "./pages/Governance";
 import Stock from "./pages/Stock";
 import Impact from "./pages/Impact";
-import Policy from "./pages/Policy";
+import Policy from "./pages/Policy"; // ← Dynamic Privacy Policy
 import TermsConditions from "./pages/TermsConditions";
 import HelpCentre from "./pages/HelpCentre";
 import InvestorRelations from "./pages/InvestorRelations";
@@ -40,6 +40,8 @@ import MaterialCreditors from "./admin/pages/governance/MaterialCreditors";
 import IndustryReport from "./admin/pages/governance/IndustryReport";
 import SchemeArrangements from "./admin/pages/governance/SchemeArrangements";
 import MediaPress from "./admin/pages/governance/MediaPress";
+import AdminAnnouncements from "./admin/pages/AdminAnnouncements";
+import AdminPrivacyPolicy from "./admin/pages/AdminPrivacyPolicy"; 
 
 export default function App() {
   const location = useLocation();
@@ -58,7 +60,7 @@ export default function App() {
         <Route path="/governance" element={<Governance />} />
         <Route path="/stock" element={<Stock />} />
         <Route path="/impact" element={<Impact />} />
-        <Route path="/policy" element={<Policy />} />
+        <Route path="/policy" element={<Policy />} /> {/* Dynamic */}
         <Route path="/terms" element={<TermsConditions />} />
         <Route path="/help" element={<HelpCentre />} />
         <Route path="/investor-relations" element={<InvestorRelations />} />
@@ -79,13 +81,16 @@ export default function App() {
           {/* Dashboard */}
           <Route path="dashboard" element={<Dashboard />} />
 
-          {/* --- PERFORMANCE SECTION (Updated) --- */}
+          {/* Announcements */}
+          <Route path="announcement" element={<AdminAnnouncements />} />
+
+          {/* --- PERFORMANCE --- */}
           <Route path="performance/quarterly" element={<QuarterlyResultsAdmin />} />
           <Route path="performance/annual/company" element={<AnnualCompany />} />
           <Route path="performance/annual/subsidiaries" element={<AnnualSubsidiaries />} />
           <Route path="performance/annual/group" element={<AnnualGroup />} />
 
-          {/* --- GOVERNANCE SECTION --- */}
+          {/* --- GOVERNANCE --- */}
           <Route path="governance/board" element={<BoardMembers />} />
           <Route path="governance/committee-composition" element={<CommitteeComposition />} />
           <Route path="governance/policies" element={<Policies />} />
@@ -97,6 +102,10 @@ export default function App() {
           <Route path="governance/industry-report" element={<IndustryReport />} />
           <Route path="governance/scheme-of-arrangements" element={<SchemeArrangements />} />
           <Route path="governance/media-press" element={<MediaPress />} />
+
+
+
+         <Route path="pages/privacy-policy" element={<AdminPrivacyPolicy />} /> 
 
         </Route>
       </Routes>

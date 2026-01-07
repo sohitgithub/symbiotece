@@ -244,19 +244,19 @@ const Navbar = () => {
                         </div>
                       </Link>
 
-                      <Link
-                        to="/governance?tab=Secreterial%20%26%20Regulatory%20Compliance"
-                        className="mega-item-link"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setOpenMenu(null);
-                        }}
-                      >
-                        <div className="mega-item">
-                          <h4>Disclosures</h4>
-                          <p>Regulatory & financial disclosures</p>
-                        </div>
-                      </Link>
+                   <Link
+  to="/governance?tab=Disclosures"
+  className="mega-item-link"
+  onClick={(e) => {
+    e.stopPropagation();
+    setOpenMenu(null);
+  }}
+>
+  <div className="mega-item">
+    <h4>Disclosures</h4>
+    <p>Regulatory & financial disclosures</p>
+  </div>
+</Link>
 
 
                     </div>

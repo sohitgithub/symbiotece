@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, Navigate } from "react-router-dom";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function MemberPage() {
   const { slug } = useParams();
+    const navigate = useNavigate();
   
   // State
   const [member, setMember] = useState(null);
